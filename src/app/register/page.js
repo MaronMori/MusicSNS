@@ -11,7 +11,8 @@ export default function Page() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const doRegister = () => {
+    const doRegister = (e) => {
+        e.preventDefault()
         const auth = getAuth();
 
         createUserWithEmailAndPassword(auth, email, password)
@@ -23,30 +24,29 @@ export default function Page() {
             })
             .catch((error) => {
                 console.log(error);
+                alert(error.message);
             })
     }
     return (
-        <div className="text-center">
-            <h1 className="p-5">Create Account</h1>
-            <div>
-                <form className="grid grid-rows-2 gap-6">
-                    <div className="grid grid-cols-2 px-16">
-                        <label>
-                            Email Address:
+        <div className="min-h-screen flex justify-center items-center text-center">
+                <form className="w-full max-w-md border border-black p-4" onSubmit={doRegister}>
+                    <h1 className="mb-6 text-2xl">Create Account</h1>
+                    <div className="flex justify-between items-center mb-4">
+                        <label className="mx-4">
+                            Email Address
                         </label>
-                        <input type="email" name="email" className="border border-black" onChange={(e)=> setEmail((e.target.value))}/>
+                        <input type="email" name="email" className="border border-black mx-4 rounded" onChange={(e)=> setEmail((e.target.value))}/>
+                    </div>
+                    <div className="flex justify-between items-center mb-4">
+                        <label className="mx-4">
+                            Password
+                        </label>
+                        <input type="password" name="password" className="border border-black mx-4 rounded" onChange={(e)=> setPassword((e.target.value))}/>
                     </div>
                     <div>
-                        <label>
-                            Password:
-                        </label>
-                        <input type="password" name="password" className="border border-black" onChange={(e)=> setEmail((e.target.value))}/>
-                    </div>
-                    <div>
-                        <button onClick={() => {doRegister();}}>Create</button>
+                        <button className="border border-black px-2 py-1 rounded-2xl" type="submit">Create</button>
                     </div>
                 </form>
-            </div>
         </div>
     )
 }
