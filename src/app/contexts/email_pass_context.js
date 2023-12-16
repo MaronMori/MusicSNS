@@ -21,4 +21,4 @@ export const Email_pass_provider = ({children}) => {
         </Email_pass_context.Provider>
         )
 }
-export const useEmailPass = () => {useContext(Email_pass_context)}
+export const useEmailPass = () => useContext(Email_pass_context)

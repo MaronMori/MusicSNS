@@ -1,7 +1,7 @@
-import {useEmailPass} from "@/app/login/contexts/email_pass_context";
+import {useEmailPass} from "@/app/contexts/email_pass_context";
 
 export const Form_email = () => {
-    const {setEmail} = useEmailPass;
+    const {setEmail} = useEmailPass();
     return (
         <div className="flex justify-between items-center mb-4">
             <label className="mx-4">

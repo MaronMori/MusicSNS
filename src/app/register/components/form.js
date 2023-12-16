@@ -1,37 +1,36 @@
 import {Form_email} from "@/app/components/form_email";
 import {Form_password} from "@/app/components/form_password";
-import {Sign_in_button} from "@/app/login/components/sign_in_button";
-import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
+import {Register_button} from "@/app/register/components/register_button";
+import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
 import {useEmailPass} from "@/app/contexts/email_pass_context";
 
-export const LoginForm = () => {
+export const RegisterForm = () => {
     const {email, password} = useEmailPass();
-    const doLogin = (e) => {
-        e.preventDefault();
 
+    const doRegister = (e) => {
+        e.preventDefault()
         const auth = getAuth();
 
-        signInWithEmailAndPassword(auth, email, password)
+        createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
+                // login automatically and get user info when registering completed
                 const user = userCredential.user;
-                // if login is succeeded, alert ok
                 alert("Success Log In!");
                 console.log( user );
             })
             .catch((error) => {
                 console.log(error);
                 alert(error.message);
-            });
+            })
     }
-    return (
+    return(
         <div className="min-h-screen flex justify-center items-center text-center">
-            <form className="w-full max-w-md border border-black p-4" onSubmit={doLogin}>
-                <h1 className="mb-6 text-2xl">Login</h1>
+            <form className="w-full max-w-md border border-black p-4" onSubmit={doRegister}>
+                <h1 className="mb-6 text-2xl">Create Account</h1>
                 <Form_email />
                 <Form_password />
-                <Sign_in_button />
+                <Register_button />
             </form>
         </div>
-
     )
 }
