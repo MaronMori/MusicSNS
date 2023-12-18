@@ -1,6 +1,6 @@
 import {Form_email} from "@/app/components/form_email";
 import {Form_password} from "@/app/components/form_password";
-import {Sign_in_button} from "@/app/login/components/sign_in_button";
+import {Submit_button_to_form} from "@/app/components/submit_button_to_form";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {useEmailPass} from "@/app/contexts/email_pass_context";
 
@@ -29,7 +29,7 @@ export const LoginForm = () => {
                 <h1 className="mb-6 text-2xl">Login</h1>
                 <Form_email />
                 <Form_password />
-                <Sign_in_button />
+                <Submit_button_to_form text={"Login"}/>
             </form>
         </div>
 

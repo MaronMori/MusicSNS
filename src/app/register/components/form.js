@@ -1,11 +1,13 @@
 import {Form_email} from "@/app/components/form_email";
 import {Form_password} from "@/app/components/form_password";
-import {Register_button} from "@/app/register/components/register_button";
 import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
 import {useEmailPass} from "@/app/contexts/email_pass_context";
+import {Submit_button_to_form} from "@/app/components/submit_button_to_form";
+import {useRouter} from "next/navigation";
 
 export const RegisterForm = () => {
     const {email, password} = useEmailPass();
+    const router = useRouter();
 
     const doRegister = (e) => {
         e.preventDefault()
@@ -17,6 +19,7 @@ export const RegisterForm = () => {
                 const user = userCredential.user;
                 alert("Success Log In!");
                 console.log( user );
+                router.push("/setting_user_profile")
             })
             .catch((error) => {
                 console.log(error);
@@ -29,7 +32,7 @@ export const RegisterForm = () => {
                 <h1 className="mb-6 text-2xl">Create Account</h1>
                 <Form_email />
                 <Form_password />
-                <Register_button />
+                <Submit_button_to_form text={"Register"} />
             </form>
         </div>
     )
