@@ -9,22 +9,12 @@ import { ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {useSetting_user_profile_context} from "@/app/contexts/setting_user_profile_context";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {useEffect, useState} from "react";
+import {useAuth} from "@/app/provider/auth_provider";
 
-export const Form = () => {
+export const Create_user_profile_form = () => {
     const {userID, username, bio, image} = useSetting_user_profile_context()
-    const [user, setUser] = useState(null);
 
-    // this useEffect is used to get current user information. onAuthStateChange function listen user
-    // authentication information
-    useEffect(() => {
-        const auth = getAuth();
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            setUser(currentUser);
-        });
-
-        return () => unsubscribe(); // cleanup function
-    }, []);
-    console.log(auth)
+    const { user } = useAuth();
 
     // function to check if there is already userid
     const checkUserIdExists = async (userID) => {
