@@ -48,6 +48,11 @@ export const Create_user_profile_form = () => {
 
                 // upload picture of URL to Firestore profile
                 await setDoc(doc(firestore, "users", user.uid), { profileImageUrl: imageUrl }, { merge: true});
+            }else {
+                const defaultProfileImageUrl =  "https://firebasestorage.googleapis.com/v0/b/musicsns-671d3.appspot.com/o/defaultImages%2FDALL%C2%B7E%202023-12-19%2014.33.25%20-%20A%20gender-neutral%20default%20profile%20silhouette%20for%20social%20media%2C%20featuring%20a%20simple%20human%20silhouette%20without%20any%20distinguishing%20features%20like%20ears%20or%20hai.png?alt=media&token=e2cd86e9-b0f2-407d-804f-b9d229bbfda6"
+
+                // upload default picture of URL to Firestore profile
+                await setDoc(doc(firestore, "users", user.uid), {profileImageUrl: defaultProfileImageUrl }, { merge: true});
             }
         } catch (e) {
             console.log("Error adding document: ", e);

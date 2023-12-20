@@ -4,19 +4,21 @@ import {useEffect, useRef, useState} from "react";
 import {firebaseApp, firestore, storage} from "../../../lib/FirebaseConfig";
 import {useAuth} from "@/app/provider/auth_provider";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
-import {collection, addDoc, serverTimestamp} from "firebase/firestore";
+import {collection, addDoc, serverTimestamp, getDoc} from "firebase/firestore";
 import {useRouter} from "next/navigation";
+import {data} from "autoprefixer";
 
 // function to upload image to storage
-const uploadImageToStorage = async (imageFile) => {
-    const storageRef = ref(storage, `images/${imageFile.name}`);
+const uploadImageToStorage = async (imageFile, userid) => {
+    const storageRef = ref(storage, `images/${userid}/${imageFile.name}`);
     await uploadBytes(storageRef, imageFile);
     const imageUrl =  getDownloadURL(storageRef);
     console.log(imageUrl);
     return imageUrl;
 }
+
 // function to upload user's post
-const submitPost = async ( userId, textContent, imageUrl) => {
+const submitPost = async ( userId, textContent, imageUrl, userPic, userName, originalUserId) => {
     try {
         const docRef = await addDoc(collection(firestore, "posts"),{
             userId: userId,
@@ -34,11 +36,27 @@ const submitPost = async ( userId, textContent, imageUrl) => {
     }
 }
 
+// get current user's info including profile picture, display name, original user ID
+const fetchUserData = async (userId) => {
+    const docSnap = await getDoc(doc(firestore, "users", userId));
+    return docSnap.data();
+}
+
 export const Post_modal = ({show, onClose, onPost}) => {
     if (!show) {
         return null;
     }
-    const { user } = useAuth();
+    const { user: userAuth } = useAuth();
+    if (!userAuth){
+        return <div>Loading...</div>
+    }
+
+    // to get current user's info
+    const [userData, setUserData] = useState({});
+
+    useEffect(() => {
+        setUserData(fetchUserData(userAuth.uid));
+    }, [userAuth.uid]);
 
     const [textContent, setTextContent ] = useState("");
     const [image, setImage ] = useState("")
@@ -48,15 +66,18 @@ export const Post_modal = ({show, onClose, onPost}) => {
 
     const fileInputRef = useRef();
 
+
+    // when Post button is clicked, function uses submitPost function and submits posting including userAuthId, textContent, imageUrl
     const handleSubmitPost = async (e) => {
         e.preventDefault();
 
         let imageUrl = "";
-        if (fileInputRef.current.files[0]){
-        imageUrl = await uploadImageToStorage(fileInputRef.current.files[0])}
+        const userId = userAuth.uid;
 
-        const userId = user.uid;
-        if (await submitPost(userId, textContent, imageUrl)){
+        if (fileInputRef.current.files[0]){
+        imageUrl = await uploadImageToStorage(fileInputRef.current.files[0], userId)}
+
+        if (await submitPost(userId, textContent, imageUrl, userData.profileImageUrl, userData.username, userData.userid)){
             // reset form
             setTextContent("");
             setImage("");
@@ -68,10 +89,12 @@ export const Post_modal = ({show, onClose, onPost}) => {
         }
     };
 
+    // if photo icon is clicked, the action is considered as that Input tag that is type of file is clicked.
     const handleIconClick = () => {
         fileInputRef.current.click();
     }
 
+    // to show image preview
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         if (file) {
