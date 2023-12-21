@@ -17,7 +17,7 @@ export const Posts = () => {
         const postsWithUserData = await Promise.all(querySnapshot.docs.map(async (postDoc) => {
             // to convert Firestore timestamp object to Javascript object
             const timestamp = postDoc.data();
-            const formattedDate = timestamp.create.toDate()
+            const formattedDate = timestamp.create.toDate().toLocaleDateString("en-CA", { timeZone: "America/Toronto" })
 
             const userDataDoc = await getDoc(doc(firestore, "users", postDoc.data().userId));
             const userData = userDataDoc.data();
@@ -27,7 +27,7 @@ export const Posts = () => {
                 ...postDoc.data(),
                 create: formattedDate,
                 username: userData.username,
-                userProfileImage: userData.userProfileImage,
+                userProfileImage: userData.profileImageUrl,
                 userid: userData.userid
             };
         }))
