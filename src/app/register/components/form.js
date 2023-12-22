@@ -1,8 +1,8 @@
-import {Form_email} from "@/app/components/form_email";
-import {Form_password} from "@/app/components/form_password";
+import {Form_email} from "@/app/components/tools/form_email";
+import {Form_password} from "@/app/components/tools/form_password";
 import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
 import {useEmailPass} from "@/app/contexts/email_pass_context";
-import {Submit_button_to_form} from "@/app/components/submit_button_to_form";
+import {Submit_button_to_form} from "@/app/components/tools/submit_button_to_form";
 import {useRouter} from "next/navigation";
 
 export const RegisterForm = () => {

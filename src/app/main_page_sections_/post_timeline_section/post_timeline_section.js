@@ -1,14 +1,11 @@
 import {useEffect, useState} from "react";
 import {collection, getDoc, getDocs, orderBy, query, doc} from "firebase/firestore";
-import {firestore} from "../../../lib/FirebaseConfig";
-import {Post_timeline} from "@/app/components/post/post_timeline";
+import {firestore} from "../../../../lib/FirebaseConfig";
+import {Post_timeline} from "@/app/main_page_sections_/post_timeline_section/components/post_timeline";
 
 
-
-
-export const Posts = () => {
+export const Post_timeline_section = () => {
     const [ posts, setPosts ] = useState([]);
-
 
     const fetchPosts = async () => {
         const q = query(collection(firestore, "posts"), orderBy("create", "desc"));
@@ -49,7 +46,7 @@ export const Posts = () => {
     }, []);
 
     return(
-        <div className="container flex flex-col h-screen overflow-y-auto">
+        <div className="py-6 container flex flex-col h-screen overflow-y-auto">
             <Post_timeline posts={posts}/>
         </div>
     )

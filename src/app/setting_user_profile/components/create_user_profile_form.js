@@ -2,7 +2,7 @@ import {Form_userid} from "@/app/setting_user_profile/components/form_userid";
 import {Form_display_name} from "@/app/setting_user_profile/components/form_display_name";
 import {Form_user_bio} from "@/app/setting_user_profile/components/form_user_bio";
 import {Form_user_pic} from "@/app/setting_user_profile/components/form_user_pic";
-import {Submit_button_to_form} from "@/app/components/submit_button_to_form";
+import {Submit_button_to_form} from "@/app/components/tools/submit_button_to_form";
 import {auth, firebaseApp,firestore, storage} from "../../../../lib/FirebaseConfig";
 import {getFirestore, setDoc, doc, collection, query, where, getDocs } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL} from "firebase/storage"
