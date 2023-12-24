@@ -9,7 +9,7 @@ import { ref, uploadBytes, getDownloadURL} from "firebase/storage"
 import {useSetting_user_profile_context} from "@/app/contexts/setting_user_profile_context";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {useEffect, useState} from "react";
-import {useAuth} from "@/app/provider/auth_provider";
+import {useAuth} from "@/app/components/provider/auth_provider";
 
 export const Create_user_profile_form = () => {
     const {userID, username, bio, image} = useSetting_user_profile_context()

@@ -3,7 +3,6 @@ import {createContext} from "react";
 
 export const Email_pass_context = createContext();
 
-
 export const Email_pass_provider = ({children}) => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("");
