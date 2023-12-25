@@ -80,7 +80,7 @@ export const Post_modal = ({userData, userAuth, onClose}) => {
               border-radius: 8px;
               max-width: 80%;
               max-height: 80%;
-              width: auto;
+              width: 35%;
               height: auto;
               overflow: auto;
             }

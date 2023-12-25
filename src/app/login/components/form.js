@@ -3,13 +3,16 @@ import {Form_password} from "@/app/components/tools/form_password";
 import {Submit_button_to_form} from "@/app/components/tools/submit_button_to_form";
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {useEmailPass} from "@/app/contexts/email_pass_context";
+import {useRouter} from "next/navigation";
 
 export const LoginForm = () => {
     const {email, password} = useEmailPass();
+    const router = useRouter()
     const doLogin = (e) => {
         e.preventDefault();
 
         const auth = getAuth();
+        console.log(auth)
 
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
@@ -17,6 +20,7 @@ export const LoginForm = () => {
                 // if login is succeeded, alert ok
                 alert("Success Log In!");
                 console.log( user );
+                router.push("/")
             })
             .catch((error) => {
                 console.log(error);

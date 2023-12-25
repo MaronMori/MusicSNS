@@ -19,12 +19,12 @@ export const Menu_section = ({openModal}) => {
         <nav className="mt-6 ml-6">
             <Logo />
             <ul>
-                <Menu key={"home_menu"} title={"Home"} page={"/"} icon={faHouse}/>
-                <Menu key={"search_menu"} title={"Search"} page={"search"} icon={faMagnifyingGlass}/>
-                <Menu key={"notification_menu"} title={"Notification"} page={"/"} icon={faBell}/>
-                <Menu key={"post_menu"} title={"Post"} icon={faSquarePlus} openModal={openModal}/>
-                <Menu key={"profile_menu"} title={"Profile"} page={"/"} userPic={userPic}/>
-                <Menu key={"settings_menu"} title={"Settings"} page={"/settings"} icon={faGear}/>
+                <Menu key={"home_menu"} isActive={true} title={"Home"} page={"/"} icon={faHouse}/>
+                <Menu key={"search_menu"} isActive={true} title={"Search"} page={"search"} icon={faMagnifyingGlass}/>
+                <Menu key={"notification_menu"} isActive={false} title={"Notification"} page={""} icon={faBell}/>
+                <Menu key={"post_menu"} title={"Post"} isActive={true} icon={faSquarePlus} openModal={openModal}/>
+                <Menu key={"profile_menu"} isActive={false} title={"Profile"} page={""} userPic={userPic}/>
+                <Menu key={"settings_menu"} isActive={true} title={"Settings"} page={"/settings"} icon={faGear}/>
             </ul>
         </nav>
     )

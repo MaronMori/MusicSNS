@@ -1,9 +1,13 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
-export const Menu = ({key, title, page, icon, userPic, openModal}) => {
+export const Menu = ({key, title, page, icon, userPic, openModal, isActive}) => {
+
+    // to hide unactivated menu
+    const liClass = isActive ? "active" : "inactive";
+
     return (
-        <li key={key} className="items-center m-3" style={{ maxWidth: "70%" }}>
+        <li key={key} className={`items-center my-3 ml-3 mr-auto ${liClass}`} style={{ maxWidth: "70%" }}>
             {openModal ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
                 <div className="flex justify-center items-center w-10 h-10 ml-6 mr-2">
                     <FontAwesomeIcon icon={icon} className="text-2xl" />
@@ -30,10 +34,11 @@ export const Menu = ({key, title, page, icon, userPic, openModal}) => {
                 {`
                   li {
                     position: relative;
+                    padding-bottom: 5px;
                   }
                   hr {
                    position: absolute;
-                    bottom: -5px;
+                    bottom: 0;
                     left: 10%;
                     width: 0;
                     height: 2px; 
@@ -43,6 +48,12 @@ export const Menu = ({key, title, page, icon, userPic, openModal}) => {
                   }
                 li:hover hr{
                   width: 70%;
+                }
+                li.inactive {
+                  background: gray;
+                }
+                li.active:hover{
+                  background: #F3F8FF;
                 }
                 `}
             </style>

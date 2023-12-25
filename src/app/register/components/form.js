@@ -4,6 +4,7 @@ import {createUserWithEmailAndPassword, getAuth} from "firebase/auth";
 import {useEmailPass} from "@/app/contexts/email_pass_context";
 import {Submit_button_to_form} from "@/app/components/tools/submit_button_to_form";
 import {useRouter} from "next/navigation";
+import {Button} from "@mui/material";
 
 export const RegisterForm = () => {
     const {email, password} = useEmailPass();
@@ -26,14 +27,25 @@ export const RegisterForm = () => {
                 alert(error.message);
             })
     }
+
+    const goToLoginPage = () => {
+        router.push("/login")
+    }
     return(
-        <div className="min-h-screen flex justify-center items-center text-center">
-            <form className="w-full max-w-md border border-black p-4" onSubmit={doRegister}>
-                <h1 className="mb-6 text-2xl">Create Account</h1>
-                <Form_email />
-                <Form_password />
-                <Submit_button_to_form text={"Register"} />
-            </form>
+        <div>
+            <div className="mt-52 flex justify-center items-center text-center">
+                <form className="w-full max-w-md border border-black p-4" onSubmit={doRegister}>
+                    <h1 className="mb-6 text-2xl">Create Account</h1>
+                    <Form_email />
+                    <Form_password />
+                    <Submit_button_to_form text={"Register"} />
+                </form>
+            </div>
+            <div className={"text-center"}>
+                <p className={"my-2"}>You have an account already? Then, Please go to Login Page.</p>
+                <Button variant="contained" onClick={goToLoginPage}>Login</Button>
+            </div>
         </div>
+
     )
 }
