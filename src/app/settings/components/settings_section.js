@@ -1,8 +1,7 @@
-import {useAuth} from "@/app/components/provider/auth_provider";
-import {getAuth, signOut} from "firebase/auth"
+import {signOut} from "firebase/auth"
+import {auth} from "../../../../lib/FirebaseConfig";
 
 export const Settings_section = () => {
-    const auth = getAuth()
 
     const logout = async () => {
         try {
