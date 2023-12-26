@@ -13,7 +13,6 @@ export const Menu_section = ({openModal}) => {
     if (!userPic) {
         return <div>Loading...</div>;
     }
-    console.log("user picture is" + userPic)
 
     return(
         <nav className="mt-6 ml-6">

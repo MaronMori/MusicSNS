@@ -1,7 +1,7 @@
 "use client"
 
 import {signOut} from "firebase/auth"
-import {auth} from "../../../../lib/FirebaseConfig";
+import {auth, firebaseApp} from "../../../../lib/FirebaseConfig";
 
 export const Settings_section = () => {
 

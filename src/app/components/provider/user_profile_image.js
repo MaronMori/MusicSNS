@@ -10,9 +10,10 @@ const userProfileImageContext = createContext({ userPic: null });
 export const UserProfileImageProvider = ({children}) => {
     const [userPic, setUserPic ] = useState(null);
     const { user } = useAuth();
+
     useEffect(() => {
 
-        console.log("Current user is " + user)
+        // console.log("Current user is " + user)
         const fetchUserInfo = async () => {
             if (user?.uid){
                 try {
