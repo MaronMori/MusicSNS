@@ -2,7 +2,6 @@
 
 import {createContext, useContext, useEffect, useState} from "react";
 import {getAuth, onAuthStateChanged} from "firebase/auth";
-import {auth} from "../../../../lib/FirebaseConfig";
 import {useRouter} from "next/navigation";
 
 
@@ -27,7 +26,6 @@ export const AuthProvider = ({children}) => {
 
         return () => unsubscribe(); // cleanup function
     }, []);
-    console.log(user)
 
     const value = {user};
 

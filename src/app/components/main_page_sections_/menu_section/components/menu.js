@@ -1,13 +1,35 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
-export const Menu = ({key, title, page, icon, userPic, openModal, isActive}) => {
+export const Menu = ({ title, page, icon, userPic, openModal, isActive, mobile}) => {
 
     // to hide unactivated menu
-    const liClass = isActive ? "active" : "inactive";
+    const liClass = isActive ? "active" : "hidden";
+
+    if (mobile){
+        return (
+            <li  className={`items-center ${liClass}`} style={{ maxWidth: "70%" }}>
+                {openModal ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
+                        <div className="flex justify-center  w-10 h-10">
+                            <FontAwesomeIcon icon={icon} className="text-2xl" />
+                        </div>
+                    </button>)
+                    : (<Link href={page} className="flex items-center text-3xl">
+                        <div className="flex justify-center w-10 h-10 ">
+                            {userPic ? (
+                                <img src={userPic} className="w-6 h-6 rounded-full" alt="User Profile" />
+                            ) : (
+                                <FontAwesomeIcon icon={icon} className="text-2xl" />
+                            )}
+                        </div>
+                    </Link>)
+                }
+            </li>
+        )
+    }
 
     return (
-        <li key={key} className={`items-center my-3 ml-3 mr-auto ${liClass}`} style={{ maxWidth: "70%" }}>
+        <li  className={`items-center my-3 ml-3 mr-auto ${liClass}`} style={{ maxWidth: "70%" }}>
             {openModal ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
                 <div className="flex justify-center items-center w-10 h-10 ml-6 mr-2">
                     <FontAwesomeIcon icon={icon} className="text-2xl" />
@@ -49,11 +71,7 @@ export const Menu = ({key, title, page, icon, userPic, openModal, isActive}) => 
                 li:hover hr{
                   width: 70%;
                 }
-                li.inactive {
-                  background: gray;
-                }
                 li.active:hover{
-                  background: #F3F8FF;
                 }
                 `}
             </style>

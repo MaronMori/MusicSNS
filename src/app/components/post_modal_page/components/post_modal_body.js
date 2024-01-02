@@ -12,7 +12,7 @@ export const Post_modal_body = () => {
             </div>
             <div className={"modal-user-input w-full"} style={{maxHeight: "100%"}}>
                 {imagePreview && <img src={imagePreview} alt={"Image Preview"} className={"h-96 w-auto"} />}
-                <textarea className={"w-full h-auto p-2"} rows={"5"} value={textContent} onChange={(e) => setTextContent(e.target.value)}/>
+                <textarea className={"w-full h-auto p-2"} rows={5} placeholder={"Hello!!"} value={textContent} onChange={(e) => setTextContent(e.target.value)}/>
             </div>
             <style jsx>
                 {`

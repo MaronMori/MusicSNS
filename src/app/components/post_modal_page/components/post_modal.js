@@ -1,5 +1,3 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faImage} from "@fortawesome/free-solid-svg-icons";
 import {Post_modal_header} from "@/app/components/post_modal_page/components/post_modal_header";
 import {Post_modal_body} from "@/app/components/post_modal_page/components/post_modal_body";
 import {Post_modal_footer} from "@/app/components/post_modal_page/components/post_modal_footer";
@@ -12,6 +10,7 @@ import {usePostContentContext} from "@/app/components/post_modal_page/contexts/f
 
 export const Post_modal = ({userData, userAuth, onClose}) => {
     const {textContent, setTextContent,setImage, setImagePreview } = usePostContentContext()
+    const [ uploading, setUploading ] = useState(false)
 
     const router = useRouter()
 
@@ -36,28 +35,6 @@ export const Post_modal = ({userData, userAuth, onClose}) => {
         }
     }
 
-    // when Post button is clicked, function uses submitPost function and submits posting including userAuthId, textContent, imageUrl
-    const handleSubmitPost = async (e) => {
-        e.preventDefault();
-
-        let imageUrl = "";
-        const userId = userAuth.uid;
-
-        if (fileInputRef.current.files[0]){
-            imageUrl = await uploadImageToStorage(fileInputRef.current.files[0], userId)}
-
-        if (await submitPost(userId, textContent, imageUrl, userData.profileImageUrl, userData.username, userData.userid)){
-            // reset form
-            setTextContent("");
-            setImage("");
-            setImagePreview(null);
-
-            // close modal and reload page
-            onClose()
-            router.push("/")
-        }
-    };
-
     // function to upload image to storage
     const uploadImageToStorage = async (imageFile, userid) => {
         const storageRef = ref(storage, `images/${userid}/${imageFile.name}`);
@@ -67,12 +44,39 @@ export const Post_modal = ({userData, userAuth, onClose}) => {
         return imageUrl;
     }
 
+    // when Post button is clicked, function uses submitPost function and submits posting including userAuthId, textContent, imageUrl
+    const handleSubmitPost = async (e) => {
+        e.preventDefault();
+        setUploading(true)
+
+        let imageUrl = "";
+        const userId = userAuth.uid;
+
+        // upload picture and get image url
+        if (fileInputRef.current.files[0]){
+            imageUrl = await uploadImageToStorage(fileInputRef.current.files[0], userId)}
+
+        if (await submitPost(userId, textContent, imageUrl, userData.profileImageUrl, userData.username, userData.userid)){
+            // reset form
+            setTextContent("");
+            setImage("");
+            setImagePreview(null);
+            setUploading(false)
+
+            // close modal and reload page
+            onClose()
+            router.push("/")
+        }
+    };
+
+
+
     return (
         <form className={"modal p-3"} onSubmit={handleSubmitPost} style={{maxHeight: "80%"}}>
             <Post_modal_header onClose={onClose}/>
             <Post_modal_body />
             <hr className={"font-bold"}/>
-            <Post_modal_footer fileInputRef={fileInputRef}/>
+            <Post_modal_footer fileInputRef={fileInputRef} uploading={uploading}/>
             <style jsx>
                 {`
             .modal {
@@ -80,10 +84,16 @@ export const Post_modal = ({userData, userAuth, onClose}) => {
               border-radius: 8px;
               max-width: 80%;
               max-height: 80%;
-              width: 35%;
+              width: 45%;
               height: auto;
               overflow: auto;
             }
+            @media (max-width: 600px) {
+              .modal {
+                max-width: 90%;
+                max-height: 60%;
+                width: 80%;
+              }}
             `}
             </style>
         </form>

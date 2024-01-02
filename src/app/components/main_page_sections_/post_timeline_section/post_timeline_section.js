@@ -2,6 +2,8 @@ import {useEffect, useState} from "react";
 import {collection, getDoc, getDocs, orderBy, query, doc} from "firebase/firestore";
 import {firestore} from "../../../../../lib/FirebaseConfig";
 import {Post_timeline} from "@/app/components/main_page_sections_/post_timeline_section/components/post_timeline";
+import {CircularProgress} from "@mui/material";
+import { motion } from 'framer-motion';
 
 
 export const Post_timeline_section = ({ searchTerm = ""}) => {
@@ -49,9 +51,28 @@ export const Post_timeline_section = ({ searchTerm = ""}) => {
         ? posts.filter(post => post.text.toLowerCase().includes(searchTerm.toLowerCase()))
         : posts;
 
-    return(
-        <div className="py-6 container flex flex-col h-screen overflow-y-auto">
-            <Post_timeline posts={displayedPosts}/>
+    if(!posts[0]){
+        return (
+            <div className="py-6 container flex flex-col justify-center h-screen">
+                <div className={"flex justify-center"}>
+                    <CircularProgress size={66}/>
+                </div>
+            </div>
+
+        )
+    }
+
+    return (
+        <div className="w-full md:container flex flex-col h-screen  ">
+            <motion.div
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                transition={{duration: 1}}
+            >
+                {displayedPosts.length === 0 ? <div className={"pt-56 text-center"}>No posts match your search.</div> :
+                    <Post_timeline posts={displayedPosts}/>}
+
+            </motion.div>
         </div>
     );
 }

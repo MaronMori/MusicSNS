@@ -1,7 +1,7 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faImage} from "@fortawesome/free-solid-svg-icons";
-import {useRef} from "react";
 import {usePostContentContext} from "@/app/components/post_modal_page/contexts/fileInputRef_context";
+import {motion} from "framer-motion";
 
 export const Photo_icon_button = ({fileInputRef}) => {
     const { setImagePreview } = usePostContentContext()
@@ -25,9 +25,9 @@ export const Photo_icon_button = ({fileInputRef}) => {
     return (
         <div>
             <input type={"file"} accept="image/png, image/gif, image/jpeg" style={{ display: "none"}} ref={fileInputRef} onChange={handleFileChange}/>
-            <button type={"button"} onClick={handleIconClick} className={"icon-button pt-3 pl-1"}>
+            <motion.button whileHover={{ color: "#2C7CFF"}} type={"button"} onClick={handleIconClick} className={"icon-button pt-3 pl-1"}>
                 <FontAwesomeIcon icon={faImage} size="xl"/>
-            </button>
+            </motion.button>
         </div>
     )
 }

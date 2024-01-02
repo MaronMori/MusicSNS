@@ -14,13 +14,16 @@ export default function Home() {
     const closeModal = () => setShowModal(false);
 
 
+
   return (
       <AuthProvider>
           <UserProfileImageProvider>
               <main>
-                  <div className="grid grid-cols-3">
-                      <Menu_section onClose={closeModal} openModal={openModal}/>
-                      <Post_timeline_section />
+                  <div className="flex flex-col-reverse md:grid grid-cols-3">
+                          <div className={"fixed md:static w-full"}>
+                              <Menu_section onClose={closeModal} openModal={openModal}/>
+                          </div>
+                              <Post_timeline_section />
                       <section className="container"></section>
                       <Post_modal_page show={showModal} onClose={closeModal}/>
                   </div>
