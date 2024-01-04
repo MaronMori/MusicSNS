@@ -63,7 +63,7 @@ export const Post_timeline_section = ({ searchTerm = ""}) => {
     }
 
     return (
-        <div className="w-full md:container flex flex-col h-screen  ">
+        <div className="w-full md:container flex flex-col h-dvh">
             <motion.div
                 initial={{opacity: 0}}
                 animate={{opacity: 1}}

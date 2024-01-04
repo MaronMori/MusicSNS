@@ -19,8 +19,8 @@ export default function Home() {
       <AuthProvider>
           <UserProfileImageProvider>
               <main>
-                  <div className="flex flex-col-reverse md:grid grid-cols-3">
-                          <div className={"fixed md:static w-full"}>
+                  <div className="h-svh flex flex-col-reverse md:grid grid-cols-3">
+                          <div className={"fixed bottom-0 md:static w-full"} style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
                               <Menu_section onClose={closeModal} openModal={openModal}/>
                           </div>
                               <Post_timeline_section />

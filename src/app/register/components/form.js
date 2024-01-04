@@ -33,7 +33,7 @@ export const RegisterForm = () => {
     }
     return(
         <div className={"h-screen"}>
-            <div className="mt-52 flex justify-center items-center text-center">
+            <div className="mt-32 md:mt-52 flex justify-center items-center text-center">
                 <form className="w-full max-w-md border border-black p-4" onSubmit={doRegister}>
                     <h1 className="mb-6 text-2xl">Create Account</h1>
                     <Form_email />
@@ -41,7 +41,7 @@ export const RegisterForm = () => {
                     <Submit_button_to_form text={"Register"} />
                 </form>
             </div>
-            <div className={"text-center"}>
+            <div className={"text-center mx-2"}>
                 <p className={"my-2"}>You have an account already? Then, Please go to Login Page.</p>
                 <motion.button
                     whileHover={{ scale: 1.1,  }}
@@ -50,6 +50,14 @@ export const RegisterForm = () => {
                 >
                     Login
                 </motion.button>
+                <p>If you want to use test account instead of creating new account, you can use this account to login.</p>
+                <p>新規ユーザー登録の代わりに下の仮アカウントでログインできます。</p>
+                <div className={"flex justify-center"}>
+                    <div className={"border border-black mt-2 p-4 "}>
+                        <p>Email: q80jdo8rc9@sute.jp</p>
+                        <p>Password: password123</p>
+                    </div>
+                </div>
             </div>
         </div>
 
