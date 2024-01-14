@@ -11,7 +11,7 @@ import {Post_modal} from "@/app/components/post_modal_page/components/post_modal
 import {PostContentProvider} from "@/app/components/post_modal_page/contexts/fileInputRef_context";
 
 
-export const Post_modal_page = ({show, onClose, onPost}) => {
+export const Post_modal_page = ({show, onClose}) => {
     if (!show) {
         return null;
     }

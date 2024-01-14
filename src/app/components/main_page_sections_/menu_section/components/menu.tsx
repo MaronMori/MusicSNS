@@ -2,11 +2,21 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import {IconOrImage} from "./IconOrImage";
 
-export const Menu = ({ title, page, icon, userPic, openModal, isActive, mobile}) => {
+type MenuProps = {
+    title: string,
+    page: string,
+    icon: any,
+    userPic: any,
+    openModal: () => void,
+    isActive: boolean,
+    mobile: boolean
+}
+export const Menu:React.FunctionComponent<MenuProps> = ({ title, page, icon, userPic, openModal, isActive, mobile}) => {
 
     // to hide unactivated menu
-    const liClass = isActive ? "active" : "hidden";
+    const liClass:string = isActive ? "active" : "hidden";
 
+    // mobile menu
     if (mobile){
         return (
             <li className={`items-center ${liClass}`} style={{ maxWidth: "70%" }}>
@@ -25,6 +35,7 @@ export const Menu = ({ title, page, icon, userPic, openModal, isActive, mobile})
         )
     }
 
+    // desktop menu
     return (
         <li  className={`items-center my-3 ml-3 mr-auto ${liClass}`} style={{ maxWidth: "70%" }}>
             {openModal ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
