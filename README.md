@@ -1,37 +1,59 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# アプリケーション名
+MusicSNS
 
-## Getting Started
+## アプリケーション概要
+X(元Twitter)やInstagramのようなSNSアプリケーション
 
-First, run the development server:
+## かかった期間
+3週間
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## URL
+[https://music-sns.vercel.app/]
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## テスト用アカウント
+メールアドレス：q80jdo8rc9@sute.jp  
+パスワード：password123
 
-You can start editing the page by modifying `app/post_modal_page.js`. The page auto-updates as you edit the file.
+## 利用方法
+※利用するにはログインが必要です。テスト用のアカウントかご自身のメールアドレスから登録してください。  
+・メニューのPOSTから投稿ができます。写真の投稿も可能です。  
+・ユーザー登録の時に、ユーザープロフィール画像、プロフィール文、アカウントIDを作成できます。  
+・メニューのSearchから特定のキーワードを持つ投稿のみを表示することが可能です。  
+・メニューのSettingsからログアウトができます。  
+・投稿のハートマークを押すとマークが赤くなり、いいねできます。  
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 作ろうと思った経緯
+何かしっかりとしたアプリケーションを作成しようと思った時に、SNSを作ってみようと思いついたのと、TwitterやInstagramのようなアプリケーションの作成に憧れていたからです。　　
 
-## Learn More
+## 使用した技術
+### React
+Webアプリケーションを作成する際に最も流行していて必要なライブラリのため、Udemyで一気に学習しすぐにアプリケーションを作成し理解度を深めようとしたためです。
 
-To learn more about Next.js, take a look at the following resources:
+### Firebase
+ユーザーの管理や投稿のデータを写真も含めて管理する場合に比較的に容易に実装可能なNosqlのFirebaseを選びました。
+### reCAPTCHA v3
+ユーザーを作成するときに、botや不正なアカウントの作成を防ぐために導入しました。よく別のサイトでアカウントを作成やログインする際に今までみてきたことから気づいて行いました。
+### Material UI
+よりUIをよくしながら実装の早期化を目指すためにMaterial UIを実装しました。React Bootstrapとも迷いましたが、少しレガシーなデザインと言われているそうなのでこのコンポーネントを選びました。
+### framer-motion
+アニメーションも何か簡単にプロフェッショナルらしく実装したいなと考えた時に、このライブラリを使用しました。まだ少ししか導入していないので今後もっと導入していきたいです。
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Tailwind
+ReactでのCSSの書き方は色々あって悩みましたが、比較的実際の開発現場ではTailwindが使われているということで選びました。
+### Next.js
+ReactをUdemyで学んだのと同時にNext.jsも学んだので、Next.jsの導入を決めました。Vercelで簡単にデプロイできるのも選んだ理由です。
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## データベース構造
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## ローカルでの実装方法
+npm run dev で開発モードで起動でき、npm run buildした後にnpm run startをすると本番環境で起動できます。
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# MusicSNS
+
+## 今後追加する機能
+今後は聞いている音楽を共有するSNSアプリケーションにしようと思っており、SpotifyとのAPIを導入して自分が最近聞いている曲や、おすすめしたい曲などを投稿できる機能を作成する予定です。  
+またユーザーのフォロー機能とコメント機能も作成していきたいです。
+
+## 今後取り組みたい課題
+投稿一覧の読み込みが少し遅いのでデータベースからの読み込みを早くしたいと考えています。そのためにはデータベースを変える必要があるかもと考えています。
+
