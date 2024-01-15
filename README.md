@@ -43,9 +43,6 @@ ReactでのCSSの書き方は色々あって悩みましたが、比較的実際
 ### Next.js
 ReactをUdemyで学んだのと同時にNext.jsも学んだので、Next.jsの導入を決めました。Vercelで簡単にデプロイできるのも選んだ理由です。
 
-
-## データベース構造
-
 ## ローカルでの実装方法
 npm run dev で開発モードで起動でき、npm run buildした後にnpm run startをすると本番環境で起動できます。
 
