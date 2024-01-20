@@ -2,6 +2,7 @@
 
 import {signOut} from "firebase/auth"
 import {auth} from "../../../../lib/FirebaseConfig";
+import SpotifyLogin from "./spotifyLogin";
 
 export const Settings_section = () => {
 
@@ -17,6 +18,7 @@ export const Settings_section = () => {
     return(
         <div className={"h-screen text-center"}>
             <button onClick={logout} className={"mt-32 py-2 px-4 border border-black rounded-3xl"}>Logout</button>
+            <SpotifyLogin />
         </div>
     )
 }

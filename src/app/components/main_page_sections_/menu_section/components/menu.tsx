@@ -7,7 +7,7 @@ type MenuProps = {
     page: string,
     icon: any,
     userPic: any,
-    openModal: () => void,
+    openModal: (() => void) | boolean,
     isActive: boolean,
     mobile: boolean
 }
@@ -20,7 +20,7 @@ export const Menu:React.FunctionComponent<MenuProps> = ({ title, page, icon, use
     if (mobile){
         return (
             <li className={`items-center ${liClass}`} style={{ maxWidth: "70%" }}>
-                {openModal ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
+                {typeof openModal === "function" ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
                         <div className="flex justify-center  w-10 h-10">
                             <FontAwesomeIcon icon={icon} className="text-2xl" />
                         </div>
@@ -38,7 +38,7 @@ export const Menu:React.FunctionComponent<MenuProps> = ({ title, page, icon, use
     // desktop menu
     return (
         <li  className={`items-center my-3 ml-3 mr-auto ${liClass}`} style={{ maxWidth: "70%" }}>
-            {openModal ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
+            {typeof openModal === "function" ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
                 <div className="flex justify-center items-center w-10 h-10 ml-6 mr-2">
                     <FontAwesomeIcon icon={icon} className="text-2xl" />
                 </div>
