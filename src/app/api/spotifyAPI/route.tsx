@@ -1,6 +1,9 @@
 import {NextApiResponse, NextApiRequest} from "next";
-export async function POST(res: NextApiResponse, req: NextApiRequest) {
-  const code = req.query.code;
+import {NextRequest, NextResponse} from "next/server";
+export async function POST(req: Request, res: Response) {
+  const data = await req.json();
+
+  const code = data.code;
 
   if (typeof code === "string"){
     const response = await fetch('https://accounts.spotify.com/api/token', {
@@ -16,13 +19,13 @@ export async function POST(res: NextApiResponse, req: NextApiRequest) {
       }),
     });
 
-
-
     const data = await response.json();
+
 
     if (data.access_token) {
       // トークンを使用してユーザーのデータを取得する処理
       const accessToken = data.access_token;
+      console.log(accessToken)
 
       // ユーザーの最近の曲を取得
       const recentTracksResponse = await fetch("https://api.spotify.com/v1/me/player/recently-played", {
@@ -31,23 +34,17 @@ export async function POST(res: NextApiResponse, req: NextApiRequest) {
         },
       });
       const recentTracks = await recentTracksResponse.json();
-
       // send data to frontend
-      res.status(200).json({recentTracks})
-      res.status(200).redirect("/demo")
+      return NextResponse.json({recentTracks: recentTracks}, { status: 200})
 
     } else {
       // エラーハンドリング
-      res.status(401).send("Authorization failed!")
+      return NextResponse.json({error: "Authorization failed!"}, {status: 401})
     }
-
-
   }
   else {
     // codeがstringでない場合のエラーハンドリング
-    res.status(400).send('Invalid request');
+    return NextResponse.json({error: "Invalid request"}, {status: 400})
   }
-
-
 }
 
