@@ -1,5 +1,24 @@
 import {NextApiResponse, NextApiRequest} from "next";
 import {NextRequest, NextResponse} from "next/server";
+import {getAll} from "@firebase/remote-config";
+
+async function getUserSongs(accessToken) {
+  let Songs = [];
+  let url = 'https://api.spotify.com/v1/me/tracks';
+
+
+    const response = await fetch(url, {
+      headers: {
+        "Authorization": `Bearer ${accessToken}`,
+      },
+    });
+    const data = await response.json();
+
+  return {
+    songs: data.items,
+    next: data.next
+  };
+}
 export async function POST(req: Request, res: Response) {
   const data = await req.json();
 
@@ -18,24 +37,17 @@ export async function POST(req: Request, res: Response) {
         redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
       }),
     });
-
     const data = await response.json();
-
 
     if (data.access_token) {
       // トークンを使用してユーザーのデータを取得する処理
       const accessToken = data.access_token;
-      console.log(accessToken)
+      const refreshToken = data.refresh_token;
 
-      // ユーザーの最近の曲を取得
-      const recentTracksResponse = await fetch("https://api.spotify.com/v1/me/player/recently-played", {
-        headers: {
-          "Authorization" : `Bearer ${accessToken}`,
-        },
-      });
-      const recentTracks = await recentTracksResponse.json();
+      // ユーザーのお気に入りの曲リストを取得
+      const userData = await getUserSongs(accessToken);
       // send data to frontend
-      return NextResponse.json({recentTracks: recentTracks}, { status: 200})
+      return NextResponse.json({userSongs: userData.songs, nextURL: userData.next, accessToken: accessToken, refreshToken: refreshToken}, { status: 200})
 
     } else {
       // エラーハンドリング
@@ -47,4 +59,3 @@ export async function POST(req: Request, res: Response) {
     return NextResponse.json({error: "Invalid request"}, {status: 400})
   }
 }
-

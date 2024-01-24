@@ -8,8 +8,9 @@ export default function SpotifyLoading() {
     const router = useRouter()
     const searchParams = useSearchParams()
 
-    useEffect(() => {
-        console.log("Effect")
+
+    useEffect(() =>{
+
         const code = searchParams.get("code")
         if (code) {
             fetch("/api/spotifyAPI", {
@@ -20,7 +21,6 @@ export default function SpotifyLoading() {
                 body: JSON.stringify({ code }),
             })
                 .then((response) => {
-                    console.log(response + " client")
                     if (response.ok) {
                         return response.json(); // レスポンスがOKならJSONとして解析
                     } else {
@@ -28,7 +28,10 @@ export default function SpotifyLoading() {
                     }
                 })
                 .then((data) => {
-                    router.push("/demo")
+                    // router.push("/demo")
+                    data.userSongs.forEach(item => {
+                        console.log(item.track.name)
+                    })
                 })
         }
 

@@ -19,7 +19,12 @@ export const Post_timeline_section = ({ searchTerm = ""}) => {
             const formattedDate = timestamp.create.toDate().toLocaleDateString("en-CA", { timeZone: "America/Toronto" })
 
             const userDataDoc = await getDoc(doc(firestore, "users", postDoc.data().userId));
+
             const userData = userDataDoc.data();
+
+            if(!userData){
+                return null
+            }
 
             return {
                 id: postDoc.id,
@@ -30,7 +35,7 @@ export const Post_timeline_section = ({ searchTerm = ""}) => {
                 userid: userData.userid
             };
         }))
-        setPosts(postsWithUserData);
+        setPosts(postsWithUserData.filter(post => post != null));
     }
 
     const handleRefreshTimeline = async () => {

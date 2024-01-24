@@ -8,7 +8,7 @@ import {firestore, storage} from "../../../../../lib/FirebaseConfig";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {usePostContentContext} from "@/app/components/post_modal_page/contexts/fileInputRef_context";
 
-export const Post_modal = ({userData, userAuth, onClose}) => {
+export const Post_modal = ({userData, userAuth, onClose, setPostMusic}) => {
     const {textContent, setTextContent,setImage, setImagePreview } = usePostContentContext()
     const [ uploading, setUploading ] = useState(false)
 
@@ -76,7 +76,7 @@ export const Post_modal = ({userData, userAuth, onClose}) => {
             <Post_modal_header onClose={onClose}/>
             <Post_modal_body />
             <hr className={"font-bold"}/>
-            <Post_modal_footer fileInputRef={fileInputRef} uploading={uploading}/>
+            <Post_modal_footer fileInputRef={fileInputRef} uploading={uploading}　setPostMusic={setPostMusic}/>
             <style jsx>
                 {`
             .modal {
