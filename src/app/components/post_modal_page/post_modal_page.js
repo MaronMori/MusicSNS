@@ -18,6 +18,8 @@ export const Post_modal_page = ({show, onClose}) => {
     const { user: userAuth } = useAuth();
     // to get current user's info
     const [userData, setUserData] = useState({});
+    const [ isPlaying, setIsPlaying] = useState(false)
+
 
 
     // get current user's info including profile picture, display name, original user ID
@@ -39,6 +41,7 @@ export const Post_modal_page = ({show, onClose}) => {
         return <div>Loading...</div>
     }
     const onBack = () => {
+        setIsPlaying(!isPlaying)
         setPostMusic(false)
     }
 
@@ -46,7 +49,7 @@ export const Post_modal_page = ({show, onClose}) => {
         return (
             <PostContentProvider>
                 <div className={"modal-backdrop"}>
-                    <Post_music_modal onBack={onBack} />
+                    <Post_music_modal onBack={onBack} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
                     <style jsx>
                         {`
             .modal-backdrop {
