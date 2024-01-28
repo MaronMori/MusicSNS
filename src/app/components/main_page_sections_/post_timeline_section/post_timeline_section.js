@@ -21,6 +21,10 @@ export const Post_timeline_section = ({ searchTerm = ""}) => {
             const userDataDoc = await getDoc(doc(firestore, "users", postDoc.data().userId));
             const userData = userDataDoc.data();
 
+            if(!userData){
+                return null
+            }
+
             return {
                 id: postDoc.id,
                 ...postDoc.data(),
@@ -30,7 +34,7 @@ export const Post_timeline_section = ({ searchTerm = ""}) => {
                 userid: userData.userid
             };
         }))
-        setPosts(postsWithUserData);
+        setPosts(postsWithUserData.filter(post => post != null));
     }
 
     const handleRefreshTimeline = async () => {
