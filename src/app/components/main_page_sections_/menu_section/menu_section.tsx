@@ -8,29 +8,31 @@ import {motion} from "framer-motion"
 
 
 type MenuSectionProps = {
+    ifTimeline: boolean
     openModal: () => void
 }
-export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({openModal}) => {
+export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({ifTimeline, openModal}) => {
     const [showMenu, setShowMenu] = useState(true);
 
     let lastScrollY = 0;
 
     const userPic = useUserProfileImage();
 
-    const controlMenu = () => {
-        // スクロールが下向きの場合、メニューを隠す
-        setShowMenu(!(window.scrollY > lastScrollY));
-        lastScrollY = window.scrollY; // 現在のスクロール位置を保存
-    };
-    const bottomScroll = () => {
-        if (window.scrollY + window.innerHeight >= document.body.scrollHeight)
-            setShowMenu(false)
+        const controlMenu = () => {
+            // スクロールが下向きの場合、メニューを隠す
+            setShowMenu(!(window.scrollY > lastScrollY));
+            lastScrollY = window.scrollY; // 現在のスクロール位置を保存
+        };
+        const bottomScroll = () => {
+            if (window.scrollY + window.innerHeight >= document.body.scrollHeight)
+                setShowMenu(false)
     }
 
     useEffect(() => {
-        window.addEventListener("scroll", controlMenu);
-        window.addEventListener("scroll", bottomScroll);
-
+        if(ifTimeline){
+            window.addEventListener("scroll", controlMenu);
+            window.addEventListener("scroll", bottomScroll);
+        }
         return () =>{
             window.removeEventListener("scroll", controlMenu)
             window.removeEventListener('scroll', bottomScroll)
@@ -51,7 +53,7 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({openMod
     };
 
     return(
-        <nav className="">
+        <nav >
             <motion.div
                 className="md:hidden bg-white"
                 variants={variants}

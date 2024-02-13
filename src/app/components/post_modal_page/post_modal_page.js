@@ -1,15 +1,9 @@
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faImage} from "@fortawesome/free-solid-svg-icons";
-import {useEffect, useRef, useState} from "react";
-import {firebaseApp, firestore, storage} from "../../../../lib/FirebaseConfig";
+import {useEffect, useState} from "react";
+import {firestore} from "../../../../lib/FirebaseConfig";
 import {useAuth} from "@/app/components/provider/auth_provider";
-import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
-import {collection, addDoc, serverTimestamp, getDoc, doc} from "firebase/firestore";
-import {useRouter} from "next/navigation";
-import {data} from "autoprefixer";
+import {getDoc, doc} from "firebase/firestore";
 import {Post_modal} from "@/app/components/post_modal_page/components/post_modal";
 import {PostContentProvider} from "@/app/components/post_modal_page/contexts/fileInputRef_context";
-import {Dialog} from "@mui/material";
 import {Post_music_modal} from "@/app/components/post_modal_page/components/post_music_modal";
 
 
@@ -20,8 +14,6 @@ export const Post_modal_page = ({show, onClose}) => {
     const [userData, setUserData] = useState({});
     const [ isPlaying, setIsPlaying] = useState(false)
 
-
-
     // get current user's info including profile picture, display name, original user ID
     const fetchUserData = async (userId) => {
         const docSnap = await getDoc(doc(firestore, "users", userId));
@@ -29,8 +21,10 @@ export const Post_modal_page = ({show, onClose}) => {
     }
 
     useEffect(() => {
-        setUserData(fetchUserData(userAuth.uid));
-    }, [userAuth.uid]);
+        if(userAuth && userAuth.uid){
+            setUserData(fetchUserData(userAuth.uid));
+        }
+    }, [userAuth]);
 
 
     if (!show) {
@@ -49,7 +43,7 @@ export const Post_modal_page = ({show, onClose}) => {
         return (
             <PostContentProvider>
                 <div className={"modal-backdrop"}>
-                    <Post_music_modal onBack={onBack} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
+                    <Post_music_modal userAuth={userAuth} onClose={onClose} onBack={onBack} isPlaying={isPlaying} setIsPlaying={setIsPlaying}/>
                     <style jsx>
                         {`
             .modal-backdrop {

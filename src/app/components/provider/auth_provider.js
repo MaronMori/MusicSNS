@@ -5,7 +5,7 @@ import {getAuth, onAuthStateChanged} from "firebase/auth";
 import {useRouter} from "next/navigation";
 
 
-const AuthContext = createContext();
+const AuthContext = createContext({user:null});
 
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);

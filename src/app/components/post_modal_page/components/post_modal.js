@@ -17,7 +17,7 @@ export const Post_modal = ({userData, userAuth, onClose, setPostMusic}) => {
     const fileInputRef = useRef();
 
     // function to upload user's components
-    const submitPost = async ( userId, textContent, imageUrl, userPic, userName, originalUserId) => {
+    const submitPost = async ( userId, textContent, imageUrl) => {
         try {
             const docRef = await addDoc(collection(firestore, "posts"),{
                 userId: userId,
@@ -25,7 +25,6 @@ export const Post_modal = ({userData, userAuth, onClose, setPostMusic}) => {
                 image: imageUrl,
                 create: serverTimestamp()
             });
-            console.log("Document written with ID: ", docRef.id)
             alert("Uploaded!!")
             return true;
         } catch (error) {
@@ -66,6 +65,8 @@ export const Post_modal = ({userData, userAuth, onClose, setPostMusic}) => {
             // close modal and reload page
             onClose()
             router.push("/")
+        }else {
+            setUploading(false)
         }
     };
 

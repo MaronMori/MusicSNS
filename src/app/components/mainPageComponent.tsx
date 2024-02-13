@@ -2,12 +2,11 @@ import {Menu_section} from "@/app/components/main_page_sections_/menu_section/me
 import {Post_timeline_section} from "@/app/components/main_page_sections_/post_timeline_section/post_timeline_section";
 import {Post_modal_page} from "@/app/components/post_modal_page/post_modal_page";
 import {useEffect, useState} from "react";
-import {CircularProgress} from "@mui/material";
 import {LoadingPage} from "@/app/components/tools/loading";
 import {useAuth} from "@/app/components/provider/auth_provider";
-import {doc, setDoc, updateDoc} from "firebase/firestore";
+import {doc, updateDoc} from "firebase/firestore";
 import {firestore} from "../../../lib/FirebaseConfig";
-import {update} from "@firebase/database";
+import {SpotifyTokenProvider} from "@/app/components/provider/spotify_token_provider";
 
 export const MainPageComponent = ({code}) => {
     const [showModal, setShowModal] = useState(false);
@@ -59,19 +58,21 @@ export const MainPageComponent = ({code}) => {
     }, [userAuth, code]);
 
     if(loading || !userAuth){
-        return <LoadingPage text={"Uploading your songs to database..."}/>
+        return <LoadingPage text={"Uploading your songs to server..."}/>
     }
     return (
-        <main>
-            <div className="h-svh flex flex-col-reverse md:grid grid-cols-3">
-                <div className={"fixed bottom-0 md:static w-full"}
-                     style={{paddingBottom: 'env(safe-area-inset-bottom)'}}>
-                    <Menu_section openModal={openModal}/>
+        <SpotifyTokenProvider>
+            <main>
+                <div className="h-svh flex flex-col-reverse md:grid grid-cols-3">
+                    <div className={"fixed z-50 bottom-0 md:static w-full shadow-2xl"}
+                         style={{paddingBottom: 'env(safe-area-inset-bottom)'}}>
+                        <Menu_section ifTimeline={true} openModal={openModal}/>
+                    </div>
+                    <Post_timeline_section/>
+                    <section className="container"></section>
+                    <Post_modal_page show={showModal} onClose={closeModal}/>
                 </div>
-                <Post_timeline_section/>
-                <section className="container"></section>
-                <Post_modal_page show={showModal} onClose={closeModal} />
-            </div>
-        </main>
+            </main>
+        </SpotifyTokenProvider>
     )
 }
