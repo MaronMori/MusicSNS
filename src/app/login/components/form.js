@@ -4,12 +4,16 @@ import {Submit_button_to_form} from "@/app/components/tools/submit_button_to_for
 import {getAuth, signInWithEmailAndPassword} from "firebase/auth";
 import {useEmailPass} from "@/app/contexts/email_pass_context";
 import {useRouter} from "next/navigation";
+import {useState} from "react";
+import {LinearProgress} from "@mui/material";
 
 export const LoginForm = () => {
     const {email, password} = useEmailPass();
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false)
     const doLogin = (e) => {
         e.preventDefault();
+        setIsLoading(true)
 
         const auth = getAuth();
         console.log(auth)
@@ -25,7 +29,9 @@ export const LoginForm = () => {
             .catch((error) => {
                 console.log(error);
                 alert(error.message);
-            });
+            }).finally(() => {
+            setIsLoading(false)
+        });
     }
     return (
         <div className={"h-screen mx-2"}>
@@ -35,6 +41,7 @@ export const LoginForm = () => {
                     <Form_email />
                     <Form_password />
                     <Submit_button_to_form text={"Login"}/>
+                    {isLoading && <LinearProgress className={"mt-3"}/>}
                 </form>
             </div>
             <div className={"mt-4 text-center"}>
