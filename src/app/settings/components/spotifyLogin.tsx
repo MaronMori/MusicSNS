@@ -3,7 +3,7 @@ import {Button} from "@mui/material"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpotify} from "@fortawesome/free-brands-svg-icons/faSpotify";
 
-const AUTH_URL = "https://accounts.spotify.com/authorize?client_id=02668e84e0414b62b89de191d7f87246&response_type=code&redirect_uri=http://localhost:3000&scope=user-read-recently-played%20user-read-private%20user-read-email%20user-library-read%20playlist-read-private"
+const AUTH_URL = "https://accounts.spotify.com/authorize?client_id=02668e84e0414b62b89de191d7f87246&response_type=code&redirect_uri=https://music-sns.vercel.app&scope=user-read-recently-played%20user-read-private%20user-read-email%20user-library-read%20playlist-read-private"
 
 function SpotifyLogin() {
     return (
