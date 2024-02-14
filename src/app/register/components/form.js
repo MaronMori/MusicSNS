@@ -5,13 +5,17 @@ import {useEmailPass} from "@/app/contexts/email_pass_context";
 import {Submit_button_to_form} from "@/app/components/tools/submit_button_to_form";
 import {useRouter} from "next/navigation";
 import {motion} from "framer-motion";
+import {useState} from "react";
+import {LinearProgress} from "@mui/material";
 
 export const RegisterForm = () => {
     const {email, password} = useEmailPass();
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false)
 
     const doRegister = (e) => {
         e.preventDefault()
+        setIsLoading(true)
         const auth = getAuth();
 
         createUserWithEmailAndPassword(auth, email, password)
@@ -23,14 +27,16 @@ export const RegisterForm = () => {
                 router.push("/setting_user_profile")
             })
             .catch((error) => {
-                console.log(error);
                 alert(error.message);
-            })
+            }).finally(() => {
+            setIsLoading(false)
+        })
     }
 
     const goToLoginPage = () => {
         router.push("/login")
     }
+
     return(
         <div className={"h-screen"}>
             <div className="mt-32 md:mt-52 flex justify-center items-center text-center">
@@ -39,6 +45,7 @@ export const RegisterForm = () => {
                     <Form_email />
                     <Form_password />
                     <Submit_button_to_form text={"Register"} />
+                    {isLoading && <LinearProgress className={"mt-3"}/>}
                 </form>
             </div>
             <div className={"text-center mx-2"}>
