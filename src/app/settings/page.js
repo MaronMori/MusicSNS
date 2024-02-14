@@ -18,10 +18,11 @@ export default function Settings(){
             <UserProfileImageProvider>
                 <main>
                     <div className="flex flex-col-reverse md:grid grid-cols-3">
-                        <div className={"fixed md:static w-full"}>
-                            <Menu_section onClose={closeModal} openModal={openModal}/>
+                        <div className={"fixed z-50 bottom-0 md:static w-full md:shadow-none shadow-2xl"}
+                             style={{paddingBottom: 'env(safe-area-inset-bottom)'}}>
+                            <Menu_section ifTimeline={false} onClose={closeModal} openModal={openModal}/>
                         </div>
-                        <Settings_section />
+                        <Settings_section/>
                         <section className="container"></section>
                         <Post_modal_page show={showModal} onClose={closeModal}/>
                     </div>

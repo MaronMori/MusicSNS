@@ -8,7 +8,7 @@ import {firestore, storage} from "../../../../../lib/FirebaseConfig";
 import {getDownloadURL, ref, uploadBytes} from "firebase/storage";
 import {usePostContentContext} from "@/app/components/post_modal_page/contexts/fileInputRef_context";
 
-export const Post_modal = ({userData, userAuth, onClose}) => {
+export const Post_modal = ({userData, userAuth, onClose, setPostMusic}) => {
     const {textContent, setTextContent,setImage, setImagePreview } = usePostContentContext()
     const [ uploading, setUploading ] = useState(false)
 
@@ -17,7 +17,7 @@ export const Post_modal = ({userData, userAuth, onClose}) => {
     const fileInputRef = useRef();
 
     // function to upload user's components
-    const submitPost = async ( userId, textContent, imageUrl, userPic, userName, originalUserId) => {
+    const submitPost = async ( userId, textContent, imageUrl) => {
         try {
             const docRef = await addDoc(collection(firestore, "posts"),{
                 userId: userId,
@@ -25,7 +25,6 @@ export const Post_modal = ({userData, userAuth, onClose}) => {
                 image: imageUrl,
                 create: serverTimestamp()
             });
-            console.log("Document written with ID: ", docRef.id)
             alert("Uploaded!!")
             return true;
         } catch (error) {
@@ -66,6 +65,8 @@ export const Post_modal = ({userData, userAuth, onClose}) => {
             // close modal and reload page
             onClose()
             router.push("/")
+        }else {
+            setUploading(false)
         }
     };
 
@@ -76,7 +77,7 @@ export const Post_modal = ({userData, userAuth, onClose}) => {
             <Post_modal_header onClose={onClose}/>
             <Post_modal_body />
             <hr className={"font-bold"}/>
-            <Post_modal_footer fileInputRef={fileInputRef} uploading={uploading}/>
+            <Post_modal_footer fileInputRef={fileInputRef} uploading={uploading}　setPostMusic={setPostMusic}/>
             <style jsx>
                 {`
             .modal {

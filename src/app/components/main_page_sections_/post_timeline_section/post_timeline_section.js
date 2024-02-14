@@ -19,6 +19,7 @@ export const Post_timeline_section = ({ searchTerm = ""}) => {
             const formattedDate = timestamp.create.toDate().toLocaleDateString("en-CA", { timeZone: "America/Toronto" })
 
             const userDataDoc = await getDoc(doc(firestore, "users", postDoc.data().userId));
+
             const userData = userDataDoc.data();
 
             if(!userData){
@@ -37,15 +38,15 @@ export const Post_timeline_section = ({ searchTerm = ""}) => {
         setPosts(postsWithUserData.filter(post => post != null));
     }
 
-    const handleRefreshTimeline = async () => {
-        const querySnapshot = await getDocs(query(collection(firestore, "posts"), orderBy("create" , "desc")));
-        const newPosts = [];
-        querySnapshot.forEach((doc) => {
-            newPosts.push({})
-        })
-
-        setPosts(newPosts)
-    }
+    // const handleRefreshTimeline = async () => {
+    //     const querySnapshot = await getDocs(query(collection(firestore, "posts"), orderBy("create" , "desc")));
+    //     const newPosts = [];
+    //     querySnapshot.forEach((doc) => {
+    //         newPosts.push({})
+    //     })
+    //
+    //     setPosts(newPosts)
+    // }
 
     useEffect(() => {
         fetchPosts();
@@ -67,16 +68,16 @@ export const Post_timeline_section = ({ searchTerm = ""}) => {
     }
 
     return (
-        <div className="w-full md:container flex flex-col h-dvh">
-            <motion.div
-                initial={{opacity: 0}}
-                animate={{opacity: 1}}
-                transition={{duration: 1}}
-            >
-                {displayedPosts.length === 0 ? <div className={"pt-56 text-center"}>No posts match your search.</div> :
-                    <Post_timeline posts={displayedPosts}/>}
-
-            </motion.div>
-        </div>
+            <div className="w-full md:container flex flex-col h-dvh">
+                <motion.div
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    transition={{duration: 1}}
+                >
+                    {displayedPosts.length === 0 ?
+                        <div className={"pt-56 text-center"}>No posts match your search.</div> :
+                        <Post_timeline posts={displayedPosts}/>}
+                </motion.div>
+            </div>
     );
 }

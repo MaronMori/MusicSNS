@@ -1,26 +1,33 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import {IconOrImage} from "./IconOrImage";
 
-export const Menu = ({ title, page, icon, userPic, openModal, isActive, mobile}) => {
+type MenuProps = {
+    title: string,
+    page: string,
+    icon: any,
+    userPic: any,
+    openModal: (() => void) | boolean,
+    isActive: boolean,
+    mobile: boolean
+}
+export const Menu:React.FunctionComponent<MenuProps> = ({ title, page, icon, userPic, openModal, isActive, mobile}) => {
 
     // to hide unactivated menu
-    const liClass = isActive ? "active" : "hidden";
+    const liClass:string = isActive ? "active" : "hidden";
 
+    // mobile menu
     if (mobile){
         return (
-            <li  className={`items-center ${liClass}`} style={{ maxWidth: "70%" }}>
-                {openModal ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
+            <li className={`items-center ${liClass}`} style={{ maxWidth: "70%" }}>
+                {typeof openModal === "function" ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
                         <div className="flex justify-center  w-10 h-10">
                             <FontAwesomeIcon icon={icon} className="text-2xl" />
                         </div>
                     </button>)
                     : (<Link href={page} className="flex items-center text-3xl">
                         <div className="flex justify-center w-10 h-10 ">
-                            {userPic ? (
-                                <img src={userPic} className="w-6 h-6 rounded-full" alt="User Profile" />
-                            ) : (
-                                <FontAwesomeIcon icon={icon} className="text-2xl" />
-                            )}
+                            <IconOrImage icon={icon} userPic={userPic} />
                         </div>
                     </Link>)
                 }
@@ -28,9 +35,10 @@ export const Menu = ({ title, page, icon, userPic, openModal, isActive, mobile})
         )
     }
 
+    // desktop menu
     return (
         <li  className={`items-center my-3 ml-3 mr-auto ${liClass}`} style={{ maxWidth: "70%" }}>
-            {openModal ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
+            {typeof openModal === "function" ? (<button onClick={openModal} className="flex items-center text-3xl w-full">
                 <div className="flex justify-center items-center w-10 h-10 ml-6 mr-2">
                     <FontAwesomeIcon icon={icon} className="text-2xl" />
                 </div>
@@ -40,11 +48,7 @@ export const Menu = ({ title, page, icon, userPic, openModal, isActive, mobile})
             </button>)
                 : (<Link href={page} className="flex items-center text-3xl">
                         <div className="flex justify-center items-center w-10 h-10 ml-6 mr-2">
-                            {userPic ? (
-                                <img src={userPic} className="w-6 h-6 rounded-full" alt="User Profile" />
-                            ) : (
-                                <FontAwesomeIcon icon={icon} className="text-2xl" />
-                            )}
+                            <IconOrImage icon={icon} userPic={userPic}/>
                         </div>
                         <div className="ml-2">
                             {title}
