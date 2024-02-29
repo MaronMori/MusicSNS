@@ -8,7 +8,6 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import PauseCircleOutlineIcon from '@mui/icons-material/PauseCircleOutline';
 import {CircularProgress} from "@mui/material";
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from "@mui/icons-material/Close";
 
 export const Post_music_body = ({
@@ -64,6 +63,7 @@ export const Post_music_body = ({
         )
     }
 
+    // 曲の投稿のプレビュー画面
     if (songPostPage) {
         return (
             <div>
@@ -73,6 +73,14 @@ export const Post_music_body = ({
                             <AutoAwesomeIcon/>
                             <p>My Favorite Song</p>
                             <AutoAwesomeIcon/>
+                        </div>
+                    </div>
+                    <div>
+                        <div className={"text-2xl font-bold"}>
+                            {trackInfoForPost.track.name}
+                        </div>
+                        <div className={"flex justify-center"}>
+                            {trackInfoForPost.track.artists.map((artist) => <div>{artist.name}</div>)}
                         </div>
                     </div>
                     <img className={""} src={trackInfoForPost.track.album.images[0].url} alt={"Song Picture"}/>
@@ -85,7 +93,8 @@ export const Post_music_body = ({
                                 <PlayCircleOutlineIcon color={"success"} style={{fontSize: "90px"}}/>}
                         </button>
                         :
-                        <CloseIcon style={{fontSize: "90px"}} className={"absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"} />
+                        <CloseIcon style={{fontSize: "90px"}}
+                                   className={"absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"}/>
                     }
 
                 </div>

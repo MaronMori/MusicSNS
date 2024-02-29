@@ -39,11 +39,19 @@ export const Post_content = ({post}) => {
         return (
             <div className={"relative z-0"}>
                 <div className={"relative my-4 p-5 border border-amber-300 text-center shadow bg-amber-300"}>
-                    <div className={"flex justify-center mb-8 bg-amber-500 py-2 rounded-2xl font-bold shadow-2xl"}>
+                    <div className={"flex justify-center mb-4 bg-amber-500 py-2 rounded-2xl font-bold shadow-2xl"}>
                         <div className={"flex space-x-4"}>
                             <AutoAwesomeIcon/>
                             <p>My Favorite Song</p>
                             <AutoAwesomeIcon/>
+                        </div>
+                    </div>
+                    <div>
+                        <div className={"text-2xl font-bold"}>
+                            {post.songData.track.name}
+                        </div>
+                        <div className={"flex justify-center"}>
+                            {post.songData.track.artists.map((artist) => <div>{artist.name}</div>)}
                         </div>
                     </div>
                     <img className={"shadow-xl"} src={post.songData.track.album.images[0].url} alt={"Song Picture"}/>
@@ -60,7 +68,6 @@ export const Post_content = ({post}) => {
                         :
                         <CloseIcon style={{ fontSize: "90px"}} className={"absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"}/>
                     }
-
                     <div className={"mt-4"}>
                         <Button component={"a"} href={post.songData.track.album.external_urls.spotify} className={"w-full"} variant={"contained"} sx={{
                             backgroundColor: "#00EE00", // 通常時の背景色
@@ -71,7 +78,6 @@ export const Post_content = ({post}) => {
                                 backgroundColor: "#00AA00", // 押下時の背景色
                             },
                         }}>Go to This Song
-                            {/*<a href={post.songData.track.album.external_urls.spotify}>Go to this song</a>*/}
                             <FontAwesomeIcon icon={faSpotify} className={"ml-2"}/>
                         </Button>
                     </div>
