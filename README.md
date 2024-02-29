@@ -8,7 +8,7 @@ X(元Twitter)やInstagramのようなSNSアプリケーション
 3週間
 
 ## URL
-[https://music-sns.vercel.app/]
+[https://music-sns.vercel.app/register]
 
 ## テスト用アカウント
 メールアドレス：q80jdo8rc9@sute.jp  
