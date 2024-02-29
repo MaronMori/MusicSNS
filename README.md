@@ -8,7 +8,7 @@ Spotify APIを使用しお気に入りの曲を投稿できるSNSアプリケー
 1ヶ月半
 
 ## URL
-[https://music-sns.vercel.app/login]
+[https://music-sns.vercel.app/register]
 
 ## テスト用アカウント
 メールアドレス：q80jdo8rc9@sute.jp  
