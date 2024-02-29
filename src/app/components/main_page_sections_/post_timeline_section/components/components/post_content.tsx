@@ -62,7 +62,7 @@ export const Post_content = ({post}) => {
                     }
 
                     <div className={"mt-4"}>
-                        <Button className={"w-full"} variant={"contained"} sx={{
+                        <Button component={"a"} href={post.songData.track.album.external_urls.spotify} className={"w-full"} variant={"contained"} sx={{
                             backgroundColor: "#00EE00", // 通常時の背景色
                             '&:hover': {
                                 backgroundColor: "#00CC00", // ホバー時の背景色
@@ -70,8 +70,8 @@ export const Post_content = ({post}) => {
                             '&:active': {
                                 backgroundColor: "#00AA00", // 押下時の背景色
                             },
-                        }}>
-                            <a href={post.songData.track.album.external_urls.spotify}>Go to this song</a>
+                        }}>Go to This Song
+                            {/*<a href={post.songData.track.album.external_urls.spotify}>Go to this song</a>*/}
                             <FontAwesomeIcon icon={faSpotify} className={"ml-2"}/>
                         </Button>
                     </div>
