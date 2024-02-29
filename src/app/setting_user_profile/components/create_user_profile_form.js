@@ -27,7 +27,7 @@ export const Create_user_profile_form = () => {
     }
 
     const SetUpUserProfile = async (e) => {
-        console.log("Submit user Profile")
+        console.log("Submitted user Profile")
         e.preventDefault();
         setIsUploading(true)
 
@@ -42,7 +42,6 @@ export const Create_user_profile_form = () => {
         // to store userprofile on Firestore
         try {
             await setDoc(doc(firestore,"users", user.uid), { userID, username, bio });
-            console.log("Document written with ID: ");
 
             // if there is a profile picture, upload it to Firebase Storage
             if(image){

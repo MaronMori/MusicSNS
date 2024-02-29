@@ -1,4 +1,4 @@
-import MainLogo from "./ロゴ.svg"
+import MainLogo from "./MainLogo.svg"
 
 export const Logo = () => {
     return (
