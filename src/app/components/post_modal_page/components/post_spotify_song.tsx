@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import MusicNoteIcon from '@mui/icons-material/MusicNote';
 
 export const Post_spotify_song = ({setPostMusic}) => {
@@ -7,7 +8,9 @@ export const Post_spotify_song = ({setPostMusic}) => {
 
     return (
         <button onClick={clickHandler}>
-            <MusicNoteIcon />
+            <motion.div whileHover={{scale: 1.2, rotate: 30}} transition={{type: "spring", stiffness: 300}}>
+                <MusicNoteIcon/>
+            </motion.div>
         </button>
     )
 }

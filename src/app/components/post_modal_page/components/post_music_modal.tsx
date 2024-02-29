@@ -23,6 +23,7 @@ export const Post_music_modal = ({userAuth, onClose, onBack, isPlaying, setIsPla
     const [searchResultSong, setSearchResultSong] = useState([])
     const [searching, setSearching] = useState(false)
     const [previewUrl, setPreviewUrl] = useState(null)
+    const [renewUserSongs, setRenewUserSongs] = useState(false)
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const {spotifyToken} = useSpotifyToken()
 
@@ -148,6 +149,8 @@ export const Post_music_modal = ({userAuth, onClose, onBack, isPlaying, setIsPla
                     songSelectPage={songSelectPage}
                     setSongSelectPage={setSongSelectPage}
                     songPostPage={songPostPage}
+                    renewUserSongs={renewUserSongs}
+                    setRenewUserSongs={setRenewUserSongs}
                 />
                 <div className={"w-full flex justify-center"}>
                     <div
@@ -217,6 +220,8 @@ export const Post_music_modal = ({userAuth, onClose, onBack, isPlaying, setIsPla
                 songSelectPage={songSelectPage}
                 setSongSelectPage={setSongSelectPage}
                 songPostPage={songPostPage}
+                renewUserSongs={renewUserSongs}
+                setRenewUserSongs={setRenewUserSongs}
             />
             <Post_music_body
                 songPostPage={songPostPage}
@@ -230,6 +235,8 @@ export const Post_music_modal = ({userAuth, onClose, onBack, isPlaying, setIsPla
                 previewUrl={previewUrl}
                 audioRef={audioRef}
                 togglePlay={togglePlay}
+                renewUserSongs={renewUserSongs}
+                setRenewUserSongs={setRenewUserSongs}
             />
             {songPostPage && <Post_music_footer uploadingSong={uploadingSong}/>}
             <style jsx>

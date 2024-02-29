@@ -7,54 +7,62 @@ import {useAuth} from "@/app/components/provider/auth_provider";
 import {doc, updateDoc} from "firebase/firestore";
 import {firestore} from "../../../lib/FirebaseConfig";
 import {SpotifyTokenProvider} from "@/app/components/provider/spotify_token_provider";
+import {useRouter} from "next/navigation";
 
 export const MainPageComponent = ({code}) => {
     const [showModal, setShowModal] = useState(false);
     const [loading, setLoading ] = useState(false);
     const {user: userAuth} = useAuth();
+    const router = useRouter()
 
     const openModal = ():void => setShowModal(true);
     const closeModal = ():void => setShowModal(false);
 
     useEffect(() => {
-        if (!userAuth || !code) {
-            return;
-        }
+        const fetchData = async () => {
+            if (!userAuth || !code) {
+                return;
+            }
 
-        if (code) {
-            console.log("start API")
-            setLoading(true)
-            fetch("/api/spotifyAPI", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ code }),
-            })
-                .then((response) => {
-                    if (response.ok) {
-                        return response.json(); // レスポンスがOKならJSONとして解析
-                    } else {
-                        throw new Error('Network response was not ok'); // レスポンスがOKでない場合はエラーを投げる
-                    }
-                })
-                .then(async (data) => {
-                    if (!userAuth) {
-                        console.error("User is not authenticated");
-                        return;
-                    }
-                    // store songs to firebase (users document)
-                    sessionStorage.setItem("spotifyAccessToken", data.accessToken)
-                    sessionStorage.setItem("spotifyRefreshToken", data.refreshToken)
-                        try {
-                            await updateDoc(doc(firestore,"users", userAuth.uid), { Songs: data.userSongs, NextURL: data.nextURL });
-                        }catch (e) {
-                            console.log("Error uploading songs to firebase: ", e);
-                            alert(e.message);
-                        }
-                        setLoading(false)
-                })
-        }
+            console.log("start API");
+            setLoading(true);
+            try {
+                const response = await fetch("/api/spotifyAPI", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ code }),
+                });
+
+                if (!response.ok) {
+                    await router.push("/");
+                    return; // router.push後はこれ以上の処理を行わない
+                }
+
+                const data = await response.json();
+                if (!userAuth) {
+                    console.error("User is not authenticated");
+                    return;
+                }
+                // トークンと現在の時刻＋有効期限を保存
+                const currentTime = new Date().getTime();
+                const expiresIn = data.expiresIn;
+                const expireTime = currentTime + expiresIn * 1000;
+                sessionStorage.setItem("spotifyAccessToken", data.accessToken);
+                sessionStorage.setItem("spotifyRefreshToken", data.refreshToken);
+                sessionStorage.setItem("tokenExpireTime", expireTime.toString());
+
+                await updateDoc(doc(firestore, "users", userAuth.uid), { Songs: data.userSongs, NextURL: data.nextURL });
+            } catch (e) {
+                console.log("Error during the API call or document update:", e);
+                alert(e.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
     }, [userAuth, code]);
 
     if(loading || !userAuth){

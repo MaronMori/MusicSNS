@@ -6,6 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSpotify} from "@fortawesome/free-brands-svg-icons/faSpotify";
 import {Button} from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import internal from "node:stream";
 
 export const Post_content = ({post}) => {
 
@@ -51,7 +52,7 @@ export const Post_content = ({post}) => {
                             {post.songData.track.name}
                         </div>
                         <div className={"flex justify-center"}>
-                            {post.songData.track.artists.map((artist) => <div>{artist.name}</div>)}
+                            {post.songData.track.artists.map((artist, index: string) => <div key={index}>{artist.name}</div>)}
                         </div>
                     </div>
                     <img className={"shadow-xl"} src={post.songData.track.album.images[0].url} alt={"Song Picture"}/>

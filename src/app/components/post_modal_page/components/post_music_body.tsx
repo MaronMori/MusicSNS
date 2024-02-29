@@ -11,6 +11,8 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import CloseIcon from "@mui/icons-material/Close";
 
 export const Post_music_body = ({
+                                    renewUserSongs,
+                                    setRenewUserSongs,
                                     songPostPage,
                                     setSongPostPage,
                                     isPlaying,
@@ -27,7 +29,7 @@ export const Post_music_body = ({
     const [nextPage, setNextPage] = useState()
 
     const [isLoading, setIsLoading] = useState(true);
-
+    const accessToken = sessionStorage.getItem("spotifyAccessToken")
 
     const {user} = useAuth()
 
@@ -47,15 +49,15 @@ export const Post_music_body = ({
             setIsLoading(false)
         }
 
-        if (user) {
+        if (user && accessToken) {
             getUserSongs(user)
 
         }
-    }, [user]);
+    }, [user, renewUserSongs]);
 
 
 
-    if (!songs && !songPostPage) {
+    if (!songs && !songPostPage  || !accessToken) {
         return (
             <div className={"flex justify-center py-10"}>
                 <SpotifyLogin/>
@@ -80,7 +82,7 @@ export const Post_music_body = ({
                             {trackInfoForPost.track.name}
                         </div>
                         <div className={"flex justify-center"}>
-                            {trackInfoForPost.track.artists.map((artist) => <div>{artist.name}</div>)}
+                            {trackInfoForPost.track.artists.map((artist, index:string) => <div key={index}>{artist.name}</div>)}
                         </div>
                     </div>
                     <img className={""} src={trackInfoForPost.track.album.images[0].url} alt={"Song Picture"}/>
@@ -107,7 +109,7 @@ export const Post_music_body = ({
         )
     }
 
-    if (isLoading) {
+    if (isLoading || renewUserSongs) {
         return (
             <div className={"text-center py-12"}>
                 <CircularProgress/>
