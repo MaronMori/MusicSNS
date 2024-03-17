@@ -1,41 +1,40 @@
-import {NextApiResponse, NextApiRequest} from "next";
-import {NextRequest, NextResponse} from "next/server";
-import {getAll} from "@firebase/remote-config";
+import { NextResponse } from "next/server";
 
 async function getUserSongs(accessToken) {
-  let Songs = [];
-  let url = 'https://api.spotify.com/v1/me/tracks';
+  const url = "https://api.spotify.com/v1/me/tracks";
 
-    const response = await fetch(url, {
-      headers: {
-        "Authorization": `Bearer ${accessToken}`,
-      },
-    });
-    const data = await response.json();
+  const response = await fetch(url, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const data = await response.json();
 
   return {
     songs: data.items,
     next: data.next,
   };
 }
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
   const data = await req.json();
-
 
   const code = data.code;
   const refreshToken = data.refreshToken;
   const validAccessToken = data.accessToken;
 
-  if (typeof code === "string" && code){
-
-    const response = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
+  if (typeof code === "string" && code) {
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64'),
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization:
+          "Basic " +
+          Buffer.from(
+            `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`,
+          ).toString("base64"),
       },
       body: new URLSearchParams({
-        grant_type: 'authorization_code',
+        grant_type: "authorization_code",
         code,
         redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
       }),
@@ -51,23 +50,37 @@ export async function POST(req: Request, res: Response) {
       // ユーザーのお気に入りの曲リストを取得
       const userData = await getUserSongs(accessToken);
       // send data to frontend
-      return NextResponse.json({expiresIn: expiresIn, userSongs: userData.songs, nextURL: userData.next, accessToken: accessToken, refreshToken: refreshToken}, { status: 200})
-
+      return NextResponse.json(
+        {
+          expiresIn: expiresIn,
+          userSongs: userData.songs,
+          nextURL: userData.next,
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        },
+        { status: 200 },
+      );
     } else {
       // エラーハンドリング
-      return NextResponse.json({error: "Authorization failed!"}, {status: 401})
+      return NextResponse.json(
+        { error: "Authorization failed!" },
+        { status: 401 },
+      );
     }
-  }else if (refreshToken){
-
+  } else if (refreshToken) {
     // リフレッシュトークンをでアクセストークンを再取得して曲を更新
-    const response = await fetch('https://accounts.spotify.com/api/token', {
-      method: 'POST',
+    const response = await fetch("https://accounts.spotify.com/api/token", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Basic ' + Buffer.from(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`).toString('base64'),
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization:
+          "Basic " +
+          Buffer.from(
+            `${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`,
+          ).toString("base64"),
       },
       body: new URLSearchParams({
-        grant_type: 'refresh_token',
+        grant_type: "refresh_token",
         code,
         redirect_uri: process.env.SPOTIFY_REDIRECT_URI,
       }),
@@ -82,23 +95,35 @@ export async function POST(req: Request, res: Response) {
       // ユーザーのお気に入りの曲リストを取得
       const userData = await getUserSongs(accessToken);
       // send data to frontend
-      return NextResponse.json({expiresIn: expiresIn, userSongs: userData.songs, nextURL: userData.next, accessToken: accessToken, refreshToken: refreshToken}, { status: 200})
-
+      return NextResponse.json(
+        {
+          expiresIn: expiresIn,
+          userSongs: userData.songs,
+          nextURL: userData.next,
+          accessToken: accessToken,
+          refreshToken: refreshToken,
+        },
+        { status: 200 },
+      );
     } else {
       // エラーハンドリング
-      return NextResponse.json({error: "Authorization failed!"}, {status: 401})
+      return NextResponse.json(
+        { error: "Authorization failed!" },
+        { status: 401 },
+      );
     }
-  }else if (validAccessToken){
-    try{
+  } else if (validAccessToken) {
+    try {
       const userData = await getUserSongs(validAccessToken);
-      return NextResponse.json({userSongs: userData.songs, nextURL: userData.next}, { status: 200})
-
-    }catch (error){
-      return NextResponse.json({error}, {status: 405})
+      return NextResponse.json(
+        { userSongs: userData.songs, nextURL: userData.next },
+        { status: 200 },
+      );
+    } catch (error) {
+      return NextResponse.json({ error }, { status: 405 });
     }
-  }
-  else {
+  } else {
     // codeがstringでない場合のエラーハンドリング
-    return NextResponse.json({error: "Invalid request"}, {status: 400})
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
   }
 }

@@ -1,6 +1,26 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, Dispatch, useContext, useState } from "react";
 
-export const Setting_user_profile_context = createContext();
+interface Context {
+  userID: string;
+  setUserID: Dispatch<string>;
+  username: string;
+  setUsername: Dispatch<string>;
+  bio: string;
+  setBio: Dispatch<string>;
+  image: File;
+  setImage: Dispatch<File>;
+}
+
+export const Setting_user_profile_context = createContext<Context>({
+  userID: "",
+  setUserID: () => {},
+  username: "",
+  setUsername: () => {},
+  bio: "",
+  setBio: () => {},
+  image: null,
+  setImage: () => {},
+});
 
 export const Setting_user_profile_provider = ({ children }) => {
   const [userID, setUserID] = useState("");

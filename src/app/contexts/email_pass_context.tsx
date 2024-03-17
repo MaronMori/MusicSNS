@@ -1,7 +1,19 @@
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { createContext } from "react";
 
-export const Email_pass_context = createContext();
+interface Props {
+  email: string;
+  setEmail: React.Dispatch<string>;
+  password: string;
+  setPassword: React.Dispatch<string>;
+}
+
+export const Email_pass_context = createContext<Props>({
+  email: "",
+  setEmail: () => {},
+  password: "",
+  setPassword: () => {},
+});
 
 export const Email_pass_provider = ({ children }) => {
   const [email, setEmail] = useState("");

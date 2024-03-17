@@ -23,7 +23,6 @@ export const RegisterForm = () => {
         // login automatically and get user info when registering completed
         const user = userCredential.user;
         alert("Success Log In!");
-        console.log(user);
         router.push("/setting_user_profile");
       })
       .catch((error) => {

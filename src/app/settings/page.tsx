@@ -24,11 +24,7 @@ export default function Settings() {
               }
               style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
             >
-              <Menu_section
-                ifTimeline={false}
-                onClose={closeModal}
-                openModal={openModal}
-              />
+              <Menu_section ifTimeline={false} openModal={openModal} />
             </div>
             <Settings_section />
             <section className="container"></section>

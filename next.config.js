@@ -1,27 +1,30 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: false,
-    webpack: (config) => {
-        config.module.rules.push({
-            test: /\.svg$/,
-            use: [
+  reactStrictMode: false,
+  images: {
+    domains: ["firebasestorage.googleapis.com", "i.scdn.co"],
+  },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: "@svgr/webpack",
+          options: {
+            svgoConfig: {
+              plugins: [
                 {
-                    loader: "@svgr/webpack",
-                    options: {
-                        svgoConfig: {
-                            plugins: [
-                                {
-                                    name: "removeViewBox",
-                                    active: false,
-                                },
-                            ],
-                        },
-                    },
+                  name: "removeViewBox",
+                  active: false,
                 },
-            ],
-        });
-        return config;
-    },
-}
+              ],
+            },
+          },
+        },
+      ],
+    });
+    return config;
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

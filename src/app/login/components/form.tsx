@@ -16,14 +16,11 @@ export const LoginForm = () => {
     setIsLoading(true);
 
     const auth = getAuth();
-    console.log(auth);
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        // if login is succeeded, alert ok
         alert("Success Log In!");
-        console.log(user);
         router.push("/");
       })
       .catch((error) => {

@@ -24,11 +24,7 @@ export default function Search() {
               }
               style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
             >
-              <Menu_section
-                ifTimeline={false}
-                onClose={closeModal}
-                openModal={openModal}
-              />
+              <Menu_section ifTimeline={false} openModal={openModal} />
             </div>
             <Search_timeline />
             <section className="container"></section>

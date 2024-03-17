@@ -1,18 +1,30 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { useAuth } from "@/app/components/provider/auth_provider";
 import { doc, getDoc } from "firebase/firestore";
 import { firestore } from "../../../../lib/FirebaseConfig";
 
-const userProfileImageContext = createContext({ userPic: null });
+interface Context {
+  userPic: string;
+  setUserPic: Dispatch<string>;
+}
+const userProfileImageContext = createContext<Context>({
+  userPic: "",
+  setUserPic: () => {},
+});
 
 export const UserProfileImageProvider = ({ children }) => {
-  const [userPic, setUserPic] = useState(null);
+  const [userPic, setUserPic] = useState("");
   const { user } = useAuth();
 
   useEffect(() => {
-    // console.log("Current user is " + user)
     const fetchUserInfo = async () => {
       if (user?.uid) {
         try {
@@ -26,7 +38,7 @@ export const UserProfileImageProvider = ({ children }) => {
     fetchUserInfo();
   }, [user]);
 
-  const value = userPic;
+  const value = { userPic, setUserPic };
 
   return (
     <userProfileImageContext.Provider value={value}>

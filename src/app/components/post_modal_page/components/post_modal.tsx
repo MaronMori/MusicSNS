@@ -8,16 +8,16 @@ import { firestore, storage } from "../../../../../lib/FirebaseConfig";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { usePostContentContext } from "@/app/components/post_modal_page/contexts/fileInputRef_context";
 
-export const Post_modal = ({ userData, userAuth, onClose, setPostMusic }) => {
+export const Post_modal = ({ userAuth, onClose, setPostMusic }) => {
   const { textContent, setTextContent, setImage, setImagePreview } =
     usePostContentContext();
   const [uploading, setUploading] = useState(false);
 
   const router = useRouter();
 
-  const fileInputRef = useRef();
+  const fileInputRef = useRef(null);
 
-  // function to upload user's components
+  // function to upload user's contents
   const submitPost = async (userId, textContent, imageUrl) => {
     try {
       await addDoc(collection(firestore, "posts"), {
@@ -40,7 +40,6 @@ export const Post_modal = ({ userData, userAuth, onClose, setPostMusic }) => {
     const storageRef = ref(storage, `images/${userid}/${imageFile.name}`);
     await uploadBytes(storageRef, imageFile);
     const imageUrl = getDownloadURL(storageRef);
-    console.log(imageUrl);
     return imageUrl;
   };
 
@@ -53,23 +52,16 @@ export const Post_modal = ({ userData, userAuth, onClose, setPostMusic }) => {
     const userId = userAuth.uid;
 
     // upload picture and get image url
-    if (fileInputRef.current.files[0]) {
-      imageUrl = await uploadImageToStorage(
-        fileInputRef.current.files[0],
-        userId,
-      );
+    if (fileInputRef.current !== undefined) {
+      if (fileInputRef.current?.files[0]) {
+        imageUrl = await uploadImageToStorage(
+          fileInputRef.current.files[0],
+          userId,
+        );
+      }
     }
 
-    if (
-      await submitPost(
-        userId,
-        textContent,
-        imageUrl,
-        userData.profileImageUrl,
-        userData.username,
-        userData.userid,
-      )
-    ) {
+    if (await submitPost(userId, textContent, imageUrl)) {
       // reset form
       setTextContent("");
       setImage("");

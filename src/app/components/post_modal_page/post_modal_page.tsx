@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
-import { firestore } from "../../../../lib/FirebaseConfig";
+import { useState } from "react";
 import { useAuth } from "@/app/components/provider/auth_provider";
-import { getDoc, doc } from "firebase/firestore";
 import { Post_modal } from "@/app/components/post_modal_page/components/post_modal";
 import { PostContentProvider } from "@/app/components/post_modal_page/contexts/fileInputRef_context";
 import { Post_music_modal } from "@/app/components/post_modal_page/components/post_music_modal";
@@ -10,20 +8,7 @@ export const Post_modal_page = ({ show, onClose }) => {
   const [postMusic, setPostMusic] = useState(false);
   const { user: userAuth } = useAuth();
   // to get current user's info
-  const [userData, setUserData] = useState({});
   const [isPlaying, setIsPlaying] = useState(false);
-
-  // get current user's info including profile picture, display name, original user ID
-  const fetchUserData = async (userId) => {
-    const docSnap = await getDoc(doc(firestore, "users", userId));
-    return docSnap.data();
-  };
-
-  useEffect(() => {
-    if (userAuth && userAuth.uid) {
-      setUserData(fetchUserData(userAuth.uid));
-    }
-  }, [userAuth]);
 
   if (!show) {
     return null;
@@ -73,7 +58,6 @@ export const Post_modal_page = ({ show, onClose }) => {
     <PostContentProvider>
       <div className={"modal-backdrop"}>
         <Post_modal
-          userData={userData}
           userAuth={userAuth}
           onClose={onClose}
           setPostMusic={setPostMusic}
