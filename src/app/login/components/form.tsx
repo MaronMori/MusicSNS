@@ -27,7 +27,15 @@ export const LoginForm = () => {
       .catch((error) => {
         setIsLoading(false);
         console.log(error);
-        alert(error.message);
+        if (error.message.includes("auth/invalid-credential")) {
+          alert(
+            "Please enter correct email and/or password.\nメールアドレスもしくはパスワードが間違っています。",
+          );
+        } else if (error.message.includes("too-many")) {
+          alert(
+            "Too many attempts. you can try again later.\n多数のリクエストのため少し時間を置いてからログインしてください。",
+          );
+        }
       })
       .finally(() => {
         setIsLoading(false);
