@@ -1,7 +1,10 @@
+"use client";
+
+import { auth } from "../../../../lib/FirebaseConfig.js";
 import { Form_email } from "@/app/components/tools/form_email";
 import { Form_password } from "@/app/components/tools/form_password";
 import { Submit_button_to_form } from "@/app/components/tools/submit_button_to_form";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useEmailPass } from "@/app/contexts/email_pass_context";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -14,8 +17,6 @@ export const LoginForm = () => {
   const doLogin = (e) => {
     e.preventDefault();
     setIsLoading(true);
-
-    const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
