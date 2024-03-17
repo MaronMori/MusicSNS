@@ -21,7 +21,7 @@ export const RegisterForm = () => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // login automatically and get user info when registering completed
-        const user = userCredential.user;
+        userCredential.user;
         alert("Success Log In!");
         router.push("/setting_user_profile");
       })
