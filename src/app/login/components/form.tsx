@@ -46,7 +46,7 @@ export const LoginForm = () => {
   return (
     <div className={"flex items-center min-h-screen "}>
       <Paper
-        className={"md:w-1/2 w-5/6"}
+        className={"md:w-1/2 w-11/12"}
         elevation={5}
         sx={{ marginX: "auto", marginY: 0 }}
       >

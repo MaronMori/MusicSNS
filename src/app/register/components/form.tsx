@@ -44,7 +44,7 @@ export const RegisterForm = () => {
     <div className={"flex items-center min-h-screen "}>
       <Paper
         elevation={5}
-        className={"md:w-1/2 w-5/6"}
+        className={"md:w-1/2 w-11/12"}
         sx={{ marginX: "auto", marginY: 0 }}
       >
         <div className={"overflow-auto max-h-dvh py-4"}>
@@ -57,7 +57,7 @@ export const RegisterForm = () => {
               {isLoading && <LinearProgress className={"mt-3"} />}
             </form>
           </div>
-          <div className={"flex justify-center p-4"}>
+          <div className={"flex justify-center"}>
             <div className={"text-center"}>
               <div className={"flex justify-center"}>
                 <hr className={"w-5/6"} />
@@ -66,7 +66,7 @@ export const RegisterForm = () => {
                 If you have your account, you can login on Login Page.
               </p>
               <p>ログインページは下のボタンから</p>
-              <div className={"mb-2"}>
+              <div className={"mb-2 w-full"}>
                 <Link href={"/login"} className={"w-full"}>
                   <Button
                     size={"large"}
