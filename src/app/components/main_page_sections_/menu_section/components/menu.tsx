@@ -1,13 +1,13 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Link from "next/link";
 import { IconOrImage } from "./IconOrImage";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 type MenuProps = {
   title: string;
-  page: string;
+  pageName: string;
+  setPage: Dispatch<SetStateAction<string>>;
   icon: IconDefinition | IconProp | boolean;
   userPic: boolean | string;
   openModal: (() => void) | boolean;
@@ -16,11 +16,12 @@ type MenuProps = {
 };
 export const Menu: React.FC<MenuProps> = ({
   title,
-  page,
   icon,
   userPic,
   openModal,
   isActive,
+  pageName,
+  setPage,
   mobile,
 }) => {
   // to hide unactivated menu
@@ -37,6 +38,7 @@ export const Menu: React.FC<MenuProps> = ({
       <li className={`items-center ${liClass}`} style={{ maxWidth: "70%" }}>
         {typeof openModal === "function" ? (
           <button
+            type={"button"}
             onClick={openModal}
             className="flex items-center text-3xl w-full"
           >
@@ -45,11 +47,15 @@ export const Menu: React.FC<MenuProps> = ({
             </div>
           </button>
         ) : (
-          <Link href={page} className="flex items-center text-3xl">
+          <button
+            type={"button"}
+            onClick={() => setPage(pageName)}
+            className="flex items-center text-3xl"
+          >
             <div className="flex justify-center w-10 h-10 ">
               <IconOrImage icon={icon} userPic={userPic} />
             </div>
-          </Link>
+          </button>
         )}
       </li>
     );
@@ -63,6 +69,7 @@ export const Menu: React.FC<MenuProps> = ({
     >
       {typeof openModal === "function" ? (
         <button
+          type={"button"}
           onClick={openModal}
           className="flex items-center text-3xl w-full"
         >
@@ -72,12 +79,16 @@ export const Menu: React.FC<MenuProps> = ({
           <div className="ml-2">{title}</div>
         </button>
       ) : (
-        <Link href={page} className="flex items-center text-3xl">
+        <button
+          type={"button"}
+          onClick={() => setPage(pageName)}
+          className="flex items-center text-3xl"
+        >
           <div className="flex justify-center items-center w-10 h-10 ml-6 mr-2">
             <IconOrImage icon={icon} userPic={userPic} />
           </div>
           <div className="ml-2">{title}</div>
-        </Link>
+        </button>
       )}
       <hr />
       <style jsx>
@@ -98,8 +109,6 @@ export const Menu: React.FC<MenuProps> = ({
           }
           li:hover hr {
             width: 70%;
-          }
-          li.active:hover {
           }
         `}
       </style>
