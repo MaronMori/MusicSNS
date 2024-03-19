@@ -57,7 +57,6 @@ export const Post_music_modal = ({
       return () => {
         if (audioRef.current) {
           audioRef.current.pause();
-          // setIsPlaying(!isPlaying) を削除
         }
       };
     }
@@ -116,7 +115,7 @@ export const Post_music_modal = ({
       });
 
       if (!response.ok) {
-        throw new Error("Search failed");
+        alert("Search failed");
       }
 
       const { tracks } = await response.json();
@@ -132,6 +131,7 @@ export const Post_music_modal = ({
     await setIsPlaying(false);
     if (preview_url && !isPlaying) {
       await setPreviewUrl(preview_url);
+      await setIsPlaying(!isPlaying);
     } else if (preview_url && preview_url !== previewUrl) {
       await setPreviewUrl(preview_url);
     } else {
@@ -190,27 +190,6 @@ export const Post_music_modal = ({
             ))}
           </div>
         )}
-        <style jsx>
-          {`
-            .modal {
-              background: white;
-              border-radius: 8px;
-              max-width: 80%;
-              max-height: 80%;
-              width: 45%;
-              height: auto;
-              overflow: auto;
-            }
-
-            @media (max-width: 600px) {
-              .modal {
-                max-width: 90%;
-                max-height: 60%;
-                width: 80%;
-              }
-            }
-          `}
-        </style>
       </form>
     );
   }
@@ -240,27 +219,6 @@ export const Post_music_modal = ({
         renewUserSongs={renewUserSongs}
       />
       {songPostPage && <Post_music_footer uploadingSong={uploadingSong} />}
-      <style jsx>
-        {`
-          .modal {
-            background: white;
-            border-radius: 8px;
-            max-width: 80%;
-            max-height: 80%;
-            width: 45%;
-            height: auto;
-            overflow: auto;
-          }
-
-          @media (max-width: 600px) {
-            .modal {
-              max-width: 90%;
-              max-height: 60%;
-              width: 80%;
-            }
-          }
-        `}
-      </style>
     </form>
   );
 };
