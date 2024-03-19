@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+html{
+  height: 100vh;
+
+}
 body {
+  overflow: scroll;
+  height: 100%;
   background: rgb(6, 228, 255);
   background: linear-gradient(
     135deg,

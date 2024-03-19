@@ -52,7 +52,7 @@ export const Post_music_body = ({
     }
   }, [user, renewUserSongs]);
 
-  if ((!songs && !songPostPage) || !accessToken) {
+  if ((!songs && !songPostPage) || (!accessToken && !songPostPage)) {
     return (
       <div className={"flex justify-center py-10"}>
         <SpotifyLogin />

@@ -8,6 +8,8 @@ import { doc, updateDoc } from "firebase/firestore";
 import { firestore } from "../../../lib/FirebaseConfig";
 import { SpotifyTokenProvider } from "@/app/components/provider/spotify_token_provider";
 import { useRouter } from "next/navigation";
+import { Search_timeline } from "@/app/search/components/search_timeline";
+import { Settings_section } from "@/app/settings/components/settings_section";
 
 interface MainPageComponentProps {
   code: string;
@@ -15,6 +17,7 @@ interface MainPageComponentProps {
 export const MainPageComponent: FC<MainPageComponentProps> = ({ code }) => {
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState("home");
   const { user: userAuth } = useAuth();
   const router = useRouter();
 
@@ -82,9 +85,15 @@ export const MainPageComponent: FC<MainPageComponentProps> = ({ code }) => {
             className={"fixed z-50 bottom-0 md:static w-full shadow-2xl"}
             style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
           >
-            <Menu_section ifTimeline={true} openModal={openModal} />
+            <Menu_section
+              ifTimeline={true}
+              openModal={openModal}
+              setPage={setPage}
+            />
           </div>
-          <Post_timeline_section />
+          {page === "home" && <Post_timeline_section />}
+          {page === "search" && <Search_timeline />}
+          {page === "settings" && <Settings_section />}
           <section className="container"></section>
           <Post_modal_page show={showModal} onClose={closeModal} />
         </div>

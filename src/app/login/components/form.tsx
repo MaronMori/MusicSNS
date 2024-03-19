@@ -8,7 +8,9 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useEmailPass } from "@/app/contexts/email_pass_context";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { LinearProgress } from "@mui/material";
+import { Button, LinearProgress, Paper } from "@mui/material";
+import Link from "next/link";
+import { Tentative_account } from "@/app/components/tools/tentative_account";
 
 export const LoginForm = () => {
   const { email, password } = useEmailPass();
@@ -27,35 +29,56 @@ export const LoginForm = () => {
       .catch((error) => {
         setIsLoading(false);
         console.log(error);
-        alert(error.message);
+        if (error.message.includes("auth/invalid-credential")) {
+          alert(
+            "Please enter correct email and/or password.\nメールアドレスもしくはパスワードが間違っています。",
+          );
+        } else if (error.message.includes("too-many")) {
+          alert(
+            "Too many attempts. you can try again later.\n多数のリクエストのため少し時間を置いてからログインしてください。",
+          );
+        }
       })
       .finally(() => {
         setIsLoading(false);
       });
   };
   return (
-    <div className={"h-screen mx-2"}>
-      <div className="pt-32 flex justify-center text-center">
-        <form
-          className="w-full max-w-md border border-black p-4"
-          onSubmit={doLogin}
-        >
-          <h1 className="mb-6 text-2xl">Login</h1>
-          <Form_email />
-          <Form_password />
-          <Submit_button_to_form text={"Login"} />
-          {isLoading && <LinearProgress className={"mt-3"} />}
-        </form>
-      </div>
-      <div className={"mt-4 text-center"}>
-        <p>Test account/仮アカウント</p>
-        <div className={"flex justify-center"}>
-          <div className={"border border-black mt-2 p-4"}>
-            <p>Email: q80jdo8rc9@sute.jp</p>
-            <p>Password: password123</p>
+    <div className={"flex items-center min-h-screen "}>
+      <Paper
+        className={"md:w-1/2 w-11/12"}
+        elevation={5}
+        sx={{ marginX: "auto", marginY: 0 }}
+      >
+        <div className={"overflow-auto max-h-dvh p-4"}>
+          <div className={"flex justify-center text-center"}>
+            <form className="w-full max-w-md" onSubmit={doLogin}>
+              <h1 className="mb-5 text-2xl">LOGIN</h1>
+              <Form_email />
+              <Form_password />
+              <Submit_button_to_form text={"Login"} />
+              {isLoading && <LinearProgress className={"mt-3"} />}
+            </form>
+          </div>
+          <div className={"flex justify-center mt-2"}>
+            <hr className={"w-5/6"} />
+          </div>
+          <Tentative_account />
+          <div className={"flex justify-center w-full mt-2"}>
+            <Link href={"/register"} className={"w-full"}>
+              <Button
+                size={"large"}
+                fullWidth={true}
+                variant={"contained"}
+                color={"success"}
+                type={"button"}
+              >
+                Create Acccount
+              </Button>
+            </Link>
           </div>
         </div>
-      </div>
+      </Paper>
     </div>
   );
 };

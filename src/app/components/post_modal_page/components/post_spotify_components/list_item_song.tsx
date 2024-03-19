@@ -29,14 +29,13 @@ export const List_item_song = ({
     };
   }, []);
 
-  const songSelected = (event) => {
+  const songSelected = async (event) => {
     event.preventDefault();
     // 流れている曲を停止
     if (isPlaying) {
-      setIsPlaying(false);
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
+      await setIsPlaying(false);
+
+      audioRef?.current?.pause();
     }
     // searchから曲を選んだ場合、オブジェクトの階層をuser's songと同じにする
     if (song.album) {

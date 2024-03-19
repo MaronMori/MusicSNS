@@ -9,16 +9,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useUserProfileImage } from "@/app/components/provider/user_profile_image";
 import { CircularProgress } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 type MenuSectionProps = {
   ifTimeline: boolean;
   openModal: () => void;
+  setPage: Dispatch<SetStateAction<string>>;
 };
 export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
   ifTimeline,
   openModal,
+  setPage,
 }) => {
   const [showMenu, setShowMenu] = useState(true);
 
@@ -75,7 +77,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
               key={"home_menu"}
               isActive={true}
               title={"Home"}
-              page={"/"}
+              pageName={"home"}
+              setPage={setPage}
               userPic={false}
               icon={faHouse}
               openModal={false}
@@ -85,7 +88,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
               key={"search_menu"}
               isActive={true}
               title={"Search"}
-              page={"search"}
+              pageName={"search"}
+              setPage={setPage}
               userPic={false}
               icon={faMagnifyingGlass}
               openModal={false}
@@ -95,7 +99,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
               key={"notification_menu"}
               isActive={false}
               title={"Notification"}
-              page={""}
+              pageName={"notification"}
+              setPage={setPage}
               userPic={false}
               icon={faBell}
               openModal={false}
@@ -106,7 +111,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
               title={"Post"}
               isActive={true}
               icon={faSquarePlus}
-              page={""}
+              pageName={""}
+              setPage={setPage}
               userPic={false}
               openModal={openModal}
               mobile={true}
@@ -115,7 +121,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
               key={"profile_menu"}
               isActive={false}
               title={"Profile"}
-              page={""}
+              pageName={"profile"}
+              setPage={setPage}
               icon={false}
               userPic={userPic}
               openModal={false}
@@ -125,7 +132,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
               key={"settings_menu"}
               isActive={true}
               title={"Settings"}
-              page={"/settings"}
+              pageName={"settings"}
+              setPage={setPage}
               userPic={false}
               icon={faGear}
               openModal={false}
@@ -141,7 +149,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
             key={"home_menu"}
             isActive={true}
             title={"Home"}
-            page={"/"}
+            pageName={"home"}
+            setPage={setPage}
             icon={faHouse}
             userPic={false}
             openModal={false}
@@ -151,7 +160,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
             key={"search_menu"}
             isActive={true}
             title={"Search"}
-            page={"search"}
+            pageName={"search"}
+            setPage={setPage}
             icon={faMagnifyingGlass}
             userPic={false}
             openModal={false}
@@ -161,7 +171,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
             key={"notification_menu"}
             isActive={false}
             title={"Notification"}
-            page={""}
+            pageName={"notification"}
+            setPage={setPage}
             icon={faBell}
             userPic={false}
             openModal={false}
@@ -172,7 +183,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
             title={"Post"}
             isActive={true}
             icon={faSquarePlus}
-            page={""}
+            pageName={""}
+            setPage={setPage}
             openModal={openModal}
             userPic={false}
             mobile={false}
@@ -181,7 +193,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
             key={"profile_menu"}
             isActive={false}
             title={"Profile"}
-            page={""}
+            pageName={"profile"}
+            setPage={setPage}
             icon={false}
             userPic={userPic}
             openModal={false}
@@ -191,7 +204,8 @@ export const Menu_section: React.FunctionComponent<MenuSectionProps> = ({
             key={"settings_menu"}
             isActive={true}
             title={"Settings"}
-            page={"/settings"}
+            pageName={"settings"}
+            setPage={setPage}
             icon={faGear}
             userPic={false}
             openModal={false}

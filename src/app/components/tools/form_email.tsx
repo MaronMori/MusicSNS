@@ -1,16 +1,17 @@
 import { useEmailPass } from "@/app/contexts/email_pass_context";
+import { FormControl, TextField } from "@mui/material";
 
 export const Form_email = () => {
   const { setEmail } = useEmailPass();
   return (
-    <div className="flex justify-between items-center mb-4">
-      <label className="mx-4">Email Address</label>
-      <input
+    <FormControl margin={"dense"} fullWidth={true}>
+      <TextField
+        required={true}
         type="email"
-        name="email"
-        className="border border-black mx-4 rounded"
+        label="Email Address"
+        size={"small"}
         onChange={(e) => setEmail(e.target.value)}
       />
-    </div>
+    </FormControl>
   );
 };
