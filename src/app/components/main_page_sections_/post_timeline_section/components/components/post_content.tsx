@@ -70,13 +70,15 @@ export const Post_content = ({ post }) => {
               ))}
             </div>
           </div>
-          <Image
-            width={400}
-            height={450}
-            className={"shadow-xl"}
-            src={post.songData.track.album.images[0].url}
-            alt={"Song Picture"}
-          />
+          <div className={"flex justify-center"}>
+            <Image
+              width={400}
+              height={450}
+              className={"shadow-xl"}
+              src={post.songData.track.album.images[0].url}
+              alt={"Song Picture"}
+            />
+          </div>
           {post.songData.track.preview_url ? (
             <button
               type={"button"}

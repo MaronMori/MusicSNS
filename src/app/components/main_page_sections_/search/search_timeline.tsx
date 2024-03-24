@@ -23,8 +23,8 @@ export const Search_timeline = () => {
   };
 
   return (
-    <div className={"h-screen"}>
-      <div className={"flex justify-center"}>
+    <div className={"h-dvh md:h-auto"}>
+      <div className={"flex justify-center pb-4 md:h-1/6"}>
         <div
           className={
             "w-4/5 md:w-full border border-black search_ber mt-8 text-center py-2 flex justify-between"
@@ -47,14 +47,15 @@ export const Search_timeline = () => {
           />
         </div>
       </div>
-
-      {searchTerm ? (
-        <Post_timeline_section searchTerm={searchTerm} />
-      ) : (
-        <div className={"mt-32 text-center"}>
-          Please enter something you want to find...
-        </div>
-      )}
+      <div className={"searchResult"}>
+        {searchTerm ? (
+          <Post_timeline_section searchTerm={searchTerm} />
+        ) : (
+          <div className={"mt-32 text-center"}>
+            Please enter something you want to find...
+          </div>
+        )}
+      </div>
       <style jsx>
         {`
           input[type="text"]:focus {
@@ -62,6 +63,11 @@ export const Search_timeline = () => {
           }
           .search_ber.focus {
             border-color: aqua;
+          }
+          @media (max-width: 768px) {
+            .searchResult {
+              padding-bottom: 50px;
+            }
           }
         `}
       </style>

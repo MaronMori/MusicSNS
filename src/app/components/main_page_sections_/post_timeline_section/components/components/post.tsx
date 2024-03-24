@@ -5,7 +5,7 @@ import { Post_footer } from "@/app/components/main_page_sections_/post_timeline_
 
 export const Post = ({ post }) => {
   return (
-    <div key={post.id} className={"border border-[#f1f5f9]"}>
+    <div key={post.id} className={"border border-[#f1f5f9] bg-white"}>
       <Post_header post={post} />
       <Post_content post={post} />
       {post.image && <Post_picture post={post} />}

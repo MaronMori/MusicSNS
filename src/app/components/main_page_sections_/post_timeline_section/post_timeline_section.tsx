@@ -10,7 +10,6 @@ import {
 import { firestore } from "../../../../../lib/FirebaseConfig";
 import { Post_timeline } from "@/app/components/main_page_sections_/post_timeline_section/components/post_timeline";
 import { CircularProgress } from "@mui/material";
-import { motion } from "framer-motion";
 
 export const Post_timeline_section = ({ searchTerm = "" }) => {
   const [posts, setPosts] = useState([]);
@@ -81,18 +80,12 @@ export const Post_timeline_section = ({ searchTerm = "" }) => {
   }
 
   return (
-    <div className="w-full md:container flex flex-col h-dvh">
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1 }}
-      >
-        {displayedPosts.length === 0 ? (
-          <div className={"pt-56 text-center"}>No posts match your search.</div>
-        ) : (
-          <Post_timeline posts={displayedPosts} />
-        )}
-      </motion.div>
+    <div className="w-full md:flex md:flex-col h-auto">
+      {displayedPosts.length === 0 ? (
+        <div className={"pt-56 text-center"}>No posts match your search.</div>
+      ) : (
+        <Post_timeline posts={displayedPosts} />
+      )}
     </div>
   );
 };

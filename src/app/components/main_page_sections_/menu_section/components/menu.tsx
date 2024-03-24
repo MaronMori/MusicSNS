@@ -9,7 +9,17 @@ type MenuProps = {
   pageName: string;
   setPage: Dispatch<SetStateAction<string>>;
   icon: IconDefinition | IconProp | boolean;
-  userPic: boolean | string;
+  userProfileInfo:
+    | boolean
+    | {
+        bio: string;
+
+        profileImageUrl: string;
+
+        userID: string;
+
+        username: string;
+      };
   openModal: (() => void) | boolean;
   isActive: boolean;
   mobile: boolean;
@@ -17,7 +27,7 @@ type MenuProps = {
 export const Menu: React.FC<MenuProps> = ({
   title,
   icon,
-  userPic,
+  userProfileInfo,
   openModal,
   isActive,
   pageName,
@@ -32,6 +42,10 @@ export const Menu: React.FC<MenuProps> = ({
     iconType = icon;
   }
 
+  let userPic = "";
+  if (typeof userProfileInfo !== "boolean") {
+    userPic = userProfileInfo.profileImageUrl;
+  }
   // mobile menu
   if (mobile) {
     return (

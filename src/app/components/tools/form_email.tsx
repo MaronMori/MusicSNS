@@ -1,4 +1,4 @@
-import { useEmailPass } from "@/app/contexts/email_pass_context";
+import { useEmailPass } from "@/app/components/provider/email_pass_context";
 import { FormControl, TextField } from "@mui/material";
 
 export const Form_email = () => {

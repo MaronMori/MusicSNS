@@ -1,8 +1,8 @@
 "use client";
 
 import { signOut } from "firebase/auth";
-import { auth } from "../../../../lib/FirebaseConfig";
-import SpotifyLogin from "./spotifyLogin";
+import { auth } from "../../../../../lib/FirebaseConfig";
+import SpotifyLogin from "./components/spotifyLogin";
 import { Button } from "@mui/material";
 
 export const Settings_section = () => {

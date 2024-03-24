@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { AuthProvider } from "./components/provider/auth_provider";
-import { UserProfileImageProvider } from "./components/provider/user_profile_image";
+import { UserProfileInfoProvider } from "./components/provider/user_profile_info_provider";
 import { MainPageComponent } from "@/app/components/mainPageComponent";
 import { useSearchParams } from "next/navigation";
 import { ManageSongPlayerProvider } from "@/app/components/provider/manage_song_player";
@@ -18,11 +18,11 @@ export default function Home() {
 
   return (
     <AuthProvider>
-      <UserProfileImageProvider>
+      <UserProfileInfoProvider>
         <ManageSongPlayerProvider>
           <MainPageComponent code={code} />
         </ManageSongPlayerProvider>
-      </UserProfileImageProvider>
+      </UserProfileInfoProvider>
     </AuthProvider>
   );
 }
