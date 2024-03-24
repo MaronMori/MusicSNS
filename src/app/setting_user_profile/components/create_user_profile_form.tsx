@@ -13,7 +13,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { useSetting_user_profile_context } from "@/app/contexts/setting_user_profile_context";
+import { useSetting_user_profile_context } from "@/app/components/provider/setting_user_profile_context";
 import { useAuth } from "@/app/components/provider/auth_provider";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

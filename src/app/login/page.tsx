@@ -1,7 +1,7 @@
 "use client";
 
 import { LoginForm } from "@/app/login/components/form";
-import { Email_pass_provider } from "@/app/contexts/email_pass_context";
+import { Email_pass_provider } from "@/app/components/provider/email_pass_context";
 
 export default function Login() {
   return (

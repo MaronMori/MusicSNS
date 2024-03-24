@@ -3,12 +3,11 @@
 @tailwind utilities;
 
 html{
-  height: 100vh;
-
+  overflow-y: scroll;
 }
+
 body {
-  overflow: scroll;
-  height: 100%;
+  height: auto;
   background: rgb(6, 228, 255);
   background: linear-gradient(
     135deg,
@@ -16,4 +15,12 @@ body {
     rgba(30, 201, 72, 1) 50%,
     rgba(70, 91, 247, 1) 100%
   );
+}
+@media (max-width: 768px){
+body {
+  padding-bottom: 50px;
+}
+  main {
+    height: auto;
+  }
 }

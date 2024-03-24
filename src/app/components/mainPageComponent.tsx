@@ -8,8 +8,9 @@ import { doc, updateDoc } from "firebase/firestore";
 import { firestore } from "../../../lib/FirebaseConfig";
 import { SpotifyTokenProvider } from "@/app/components/provider/spotify_token_provider";
 import { useRouter } from "next/navigation";
-import { Search_timeline } from "@/app/search/components/search_timeline";
-import { Settings_section } from "@/app/settings/components/settings_section";
+import { Search_timeline } from "@/app/components/main_page_sections_/search/search_timeline";
+import { Settings_section } from "@/app/components/main_page_sections_/settings/settings_section";
+import { Profile_section } from "@/app/components/profile/profile_section";
 
 interface MainPageComponentProps {
   code: string;
@@ -80,21 +81,21 @@ export const MainPageComponent: FC<MainPageComponentProps> = ({ code }) => {
   return (
     <SpotifyTokenProvider>
       <main>
-        <div className="h-svh flex flex-col-reverse md:grid grid-cols-3">
+        <div className="h-auto md:flex-col-reverse md:grid md:grid-cols-3">
           <div
-            className={"fixed z-50 bottom-0 md:static w-full shadow-2xl"}
+            className={"md:h-svh z-50 bottom-0 md:top-0 md:sticky fixed w-full"}
             style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
           >
-            <Menu_section
-              ifTimeline={true}
-              openModal={openModal}
-              setPage={setPage}
-            />
+            <Menu_section openModal={openModal} setPage={setPage} />
           </div>
-          {page === "home" && <Post_timeline_section />}
-          {page === "search" && <Search_timeline />}
-          {page === "settings" && <Settings_section />}
-          <section className="container"></section>
+          <section className={"h-auto"}>
+            {page === "home" && <Post_timeline_section />}
+            {page === "search" && <Search_timeline />}
+            {page === "profile" && <Profile_section />}
+            {page === "settings" && <Settings_section />}
+          </section>
+
+          <section className="md:flex hidden"></section>
           <Post_modal_page show={showModal} onClose={closeModal} />
         </div>
       </main>

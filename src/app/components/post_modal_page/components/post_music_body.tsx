@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import SpotifyLogin from "@/app/settings/components/spotifyLogin";
+import SpotifyLogin from "@/app/components/main_page_sections_/settings/components/spotifyLogin";
 import { doc, getDoc } from "firebase/firestore";
 import { firestore } from "../../../../../lib/FirebaseConfig";
 import { useAuth } from "@/app/components/provider/auth_provider";

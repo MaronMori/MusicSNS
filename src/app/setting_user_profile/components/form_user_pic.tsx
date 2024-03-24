@@ -1,4 +1,4 @@
-import { useSetting_user_profile_context } from "@/app/contexts/setting_user_profile_context";
+import { useSetting_user_profile_context } from "@/app/components/provider/setting_user_profile_context";
 
 export const Form_user_pic = () => {
   const { setImage } = useSetting_user_profile_context();
