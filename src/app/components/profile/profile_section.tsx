@@ -80,9 +80,6 @@ export const Profile_section = () => {
     fetchData();
   }, [uid]);
 
-  useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
   return (
     <div>
       <div className={"mx-auto pt-8 md:px-4"}>
